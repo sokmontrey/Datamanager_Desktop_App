@@ -16,148 +16,110 @@ if(process.env.NODE_ENV === "development"){
 export class JSON_DB{
     constructor(){}
 
-    write(data, img_path){
-        try{
-            const hash_id = sha1(Date.now())
-            let final_data = {};
-            final_data[hash_id] = data;
-
-            fs.writeFileSync(path.join(database_path,`database/data/${hash_id}.json`), JSON.stringify(final_data));
-            this.write_img(hash_id, img_path);
-            return this.write_key(hash_id, data) 
-        } catch (err) { console.log(err); return err; }
+    create(data, img_path){
+        const hash_id = sha1(Date.now());
+        this.write_data(hash_id, data);
+        this.write_key(hash_id);
+        this.write_img(hash_id, img_path);
     }
 
-    write_key(hash_id, old_data){
-        const key_path = path.join(database_path, 'database/key/key.json');
+    write_json(id, data){
+        // data_structure:{
+        //     id: {
+        //         tab1: {key: value...},
+        //         tab2: {key: value...}
+        //     }
+        // }
         try{
-            let first_index;
-            for( let i in old_data ){
-                first_index = i;
-                break;
-            } 
-            const highlight = {}
-            for( let i in old_data[first_index] ){
-                highlight[i] = old_data[first_index][i];
-            }
-            if (!fs.existsSync(key_path))
-                fs.writeFileSync(key_path, JSON.stringify({}));
-
-            const data = JSON.parse(fs.readFileSync(path.join(database_path,`database/key/key.json`)))
-            data[hash_id] = highlight;
-            
-            fs.writeFileSync(path.join(database_path,`database/KEY/key.json`), JSON.stringify(data));
-        } catch (err) { return false; }
-        return true;
-    }
-
-    write_structure(data){
-        try{
-            const structure_path =path.join(database_path, 'database/Structure/structure.json');
-            fs.writeFileSync(structure_path, JSON.stringify(data));
-            this.read_structure();
+            const new_data = { [id]: data }
+            fs.writeFileSync(
+                path.join(database_path,`database/data/${id}.json`), 
+                JSON.stringify(new_data)
+            );
             return true;
-        } catch (err) { return false; }
+        }catch(e){
+            return false;
+        }
     }
 
-    read_structure(){
-        const structure_path = path.join(database_path,'database/Structure/structure.json');
+    write_key(id){
+        // key_structure: {
+        //     key:[a,b,c]
+        // }
         try{
-            if (!fs.existsSync(structure_path)) return false;
-            const data = JSON.parse(fs.readFileSync(structure_path));
-            return data;
-        } catch(err) { return false; }
-    }
-
-    read(hash_id){
-        try{
-            const data = JSON.parse(fs.readFileSync(path.join(database_path,`database/data/${hash_id}.json`)));
-            return data;
-        } catch(err) { console.log(err); return false; }
-    }
-
-    read_key(){
-        const key_path = path.join(database_path,'database/KEY/key.json');
-        try{
-            if (!fs.existsSync(key_path)){
-                fs.writeFileSync(key_path, JSON.stringify({}));
-                return false;
+            //check if key.json exists or not. if not create a key.json file   
+            if(!fs.existsSync(path.join(database_path, 'database/KEY/key.json'))){
+                fs.writeFileSync(
+                    path.join(database_path, 'database/KEY/key.json'), 
+                    JSON.stringify({key:[]})
+                );
             }
 
-            const data = JSON.parse( fs.readFileSync(path.join(database_path,'database/KEY/key.json') ) );
+            const old_key = JSON.parse( fs.readFileSync(path.join(database_path, 'database/KEY/key.json')) );
+            old_key.key.push(id);
+            fs.writeFileSync(path.join(database_path, 'database/KEY/key.json'), JSON.stringify(old_key));
+            return true;
+        }catch(e){ return false; }
+    }
+
+    write_img(id, img_path){
+        try{
+            fs.copyFileSync(img_path ,path.join(database_path,`database/Media/${id}.png`));
+            return true;
+        }catch(e){ return false; }
+    }
+
+    read_json(id){
+        try{
+            const data = JSON.parse(fs.readFileSync(path.join(database_path, `database/data/${id}.json`)));
             return data;
-        } catch(err) { console.log(err); return false; }
+        }catch(e){ return false; }
     }
 
-    update(hash_id, new_data, img_path){
+    read_img(id){
         try{
-            let final_data = {};
-            final_data[hash_id] = new_data;
-
-            fs.writeFileSync(path.join(database_path,`database/data/${hash_id}.json`), JSON.stringify(final_data));
-            this.update_img(hash_id, img_path);
-        } catch (err) { console.log(err);return false; }
-
-        return this.update_key(hash_id, new_data);
+            const img_path = path.join(database_path, `database/Media/${id}.png`);
+            return img_path;
+        }catch(e){ return false; }
     }
 
-    update_key(hash_id, old_data){
-        const key_path = path.join(database_path, 'database/KEY/key.json');
-        try{
-            let first_index;
-            for( let i in old_data ){
-                first_index = i;
-                break;
-            } 
-            const highlight = {}
-            for( let i in old_data[first_index] ){
-                highlight[i] = old_data[first_index][i];
-            }
-            const data = JSON.parse(fs.readFileSync(key_path))
-            data[hash_id] = highlight;
-            
-            fs.writeFileSync(key_path, JSON.stringify(data));
-        } catch (err) { console.log(err);return false; }
-        return true;
+    update(id, data, img_path){
+        this.update_json(id, data);
+        this.update_img(id, img_path);
     }
 
-    update_img(hash_id, img_path){
+    update_json(id, data){
         try{
-            fs.copyFileSync(img_path ,path.join(database_path,`database/Media/${hash_id}.png`));
-        }catch(err){console.log(err);return false;}
-        return true;   
-    }
-
-    delete_data(hash_id){
-        try{
-            fs.unlinkSync(path.join(database_path,`database/data/${hash_id}.json`));
-            return this.delete_data_key(hash_id) && this.delete_img(hash_id);
-        }catch(err){ return false; }
-    }
-    delete_data_key(hash_id){
-        try{
-            const data = JSON.parse( fs.readFileSync(path.join(database_path,'database/KEY/key.json') ));
-            delete data[hash_id];
-            fs.writeFileSync(path.join(database_path, 'database/Key/key.json'), JSON.stringify(data));
+            const old_data = JSON.parse(fs.readFileSync(path.join(database_path, `database/data/${id}.json`)));
+            old_data[id] = data;
+            fs.writeFileSync(path.join(database_path, `database/data/${id}.json`), JSON.stringify(old_data));
             return true;
-        } catch (err) { return false; }
+        }catch(e){ return false; }
     }
-    delete_img(hash_id){
+
+    update_img(id, img_path){
         try{
-            fs.unlinkSync(path.join(database_path, `database/Media/${hash_id}.png`));
+            fs.copyFileSync(img_path ,path.join(database_path,`database/Media/${id}.png`));
             return true;
-        } catch(err) { return false;} 
+        }catch(e){ return false; }
     }
 
-    write_img(hash_id, img_path){
+    delete(id){
+        this.delete_json(id);
+        this.delete_img(id);
+    }
+
+    delete_json(id){
         try{
-            fs.copyFileSync(img_path ,path.join(database_path,`database/Media/${hash_id}.png`));
-        }catch(err){console.log(err);return false;}
-        return true;        
+            fs.unlinkSync(path.join(database_path,`database/data/${id}.json`));
+            return true;
+        }catch(e){ return false; }
     }
 
-    read_img(hash_id){
-        return path.join(database_path, `database/Media/${hash_id}.png`);
+    delete_img(id){
+        try{
+            fs.unlinkSync(path.join(database_path,`database/Media/${id}.png`));
+            return true;
+        }catch(e){ return false; }
     }
-
 }

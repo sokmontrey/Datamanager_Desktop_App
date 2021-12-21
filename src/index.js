@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App'
-import './App.css'
+import App from './components/App';
+import './App.css';
 
 let root = document.createElement('div')
 root.id = 'root'
