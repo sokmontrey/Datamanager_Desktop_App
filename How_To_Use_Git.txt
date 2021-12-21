@@ -1,0 +1,20 @@
+git init: to init
+git add .: to add all file
+git commit -m 'command': to commit, and -m to add message
+git branch -M main
+
+[github url, https]: https://github.com/sokmontrey/Datamanager_Desktop_App.git
+[ssh]: git@github.com:sokmontrey/Datamanager_Desktop_App.git
+
+git remote add origin 'https://github.com/sokmontrey/Datamanager_Desktop_App.git'
+If ERROR: 'remote origin already exists' then: git remote remove origin  
+
+
+[from github]
+echo "# Datamanager_Desktop_App" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/sokmontrey/Datamanager_Desktop_App.git
+git push -u origin main
