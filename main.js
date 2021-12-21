@@ -21,6 +21,7 @@ function createMainWindow() {
 		icon: `${__dirname}/assets/icon.png`,
 		webPreferences: {
 			nodeIntegration: true,
+			webSecurity: false
 		},
 	})
 
