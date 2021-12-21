@@ -1,0 +1,7 @@
+{
+    "ប្រវត្តិរូបសង្ខេប": {
+        "date of birth": "DATE",
+        "sex":["male", "female"],
+        "age": "CAL"
+    }
+}
