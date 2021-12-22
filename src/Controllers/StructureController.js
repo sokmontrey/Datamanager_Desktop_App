@@ -10,8 +10,16 @@ if(process.env.NODE_ENV === "development"){
     database_path = path.join(process.cwd(), 'resources/app/assets/');
 }
 
-export default class Structure_DB{
+export class Structure_DB{
     get_schema(){
+        // schema_structure:{
+        //     "Tab1": {
+        //         "key": "value"
+        //     },
+        //     "Tab2":[{
+        //         "key": "value"
+        //     }]
+        // }
         try{
             const schema = JSON.parse(
                 fs.readFileSync(
@@ -32,6 +40,11 @@ export default class Structure_DB{
         }catch(e){ return false; }
     }
     get_type(){
+        // type_structure: {
+        //     "Tab1": {
+        //         "key": "TYPE"
+        //     }
+        // }
         try{
             const type = JSON.parse(
                 fs.readFileSync(

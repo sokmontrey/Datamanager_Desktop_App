@@ -18,7 +18,7 @@ export class JSON_DB{
 
     create(data, img_path){
         const hash_id = sha1(Date.now());
-        this.write_data(hash_id, data);
+        this.write_json(hash_id, data);
         this.write_key(hash_id);
         this.write_img(hash_id, img_path);
     }
@@ -64,12 +64,35 @@ export class JSON_DB{
 
     write_img(id, img_path){
         try{
-            fs.copyFileSync(img_path ,path.join(database_path,`database/Media/${id}.png`));
+            fs.copyFileSync(
+                img_path, 
+                path.join(database_path,`database/Media/${id}.png`)
+            );
             return true;
         }catch(e){ return false; }
     }
 
+    read_key(){
+        try{
+            if(!fs.existsSync(path.join(database_path, 'database/KEY/key.json'))){
+                fs.writeFileSync(
+                    path.join(database_path, 'database/KEY/key.json'), 
+                    JSON.stringify({key:[]})
+                );
+            }
+            const key = JSON.parse(
+                fs.readFileSync(
+                    path.join(database_path, 'database/KEY/key.json')
+                )
+            );
+            return key.key;
+        }catch(e){ return false; }
+    }
+
     read_json(id){
+        // json that read: {
+        //     "Tab": {} (no id)
+        // }
         try{
             const data = JSON.parse(fs.readFileSync(path.join(database_path, `database/data/${id}.json`)));
             return data;
@@ -89,6 +112,8 @@ export class JSON_DB{
     }
 
     update_json(id, data){
+        // method read_json is for get the entire JSON File(include id:{})
+        // but this update_json only take value inside id:{}
         try{
             const old_data = JSON.parse(fs.readFileSync(path.join(database_path, `database/data/${id}.json`)));
             old_data[id] = data;
