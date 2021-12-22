@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { 
+import {
+    update_data, 
     get_json_data,
     get_left_list,
     get_input_type,
     get_list_template,
+    use_formula
 } from "../Controllers/DataController.js";
 
 import { CreateInputElement } from "../Components/Element.js";
@@ -24,6 +26,12 @@ export default class MainPage extends React.Component{
 
     setTab (tab) { this.setState({ tab: tab }); }
     setData (new_data) { this.setState({ data: new_data }); }
+
+    SaveData(){
+        const id = this.state.id;
+        const data = this.state.data;
+        update_data(id, data, '');
+    }
 
     LeftContainer(){
         const left_list = this.state.left_list;
@@ -48,7 +56,10 @@ export default class MainPage extends React.Component{
             new_data[tab][index][key] = value;
         else new_data[tab][key] = value;
 
-        this.setData(new_data);
+        const [cal, working] = use_formula(new_data, tab);
+        if(working) this.setData(cal)
+        else { this.setData(new_data); }
+        this.SaveData();
     }
 
     PushList(){
@@ -57,13 +68,16 @@ export default class MainPage extends React.Component{
 
         new_data[tab].push(get_list_template(tab));
         this.setData(new_data);
+        this.SaveData();
     }
+
     PopList(index){
         const new_data = this.state.data;
         const tab = this.state.tab;
 
         new_data[tab].splice(index, 1);
         this.setData(new_data);
+        this.SaveData();
     }
 
     CreateRightBlock(element, index){

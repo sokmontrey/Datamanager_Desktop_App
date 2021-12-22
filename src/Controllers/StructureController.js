@@ -30,6 +30,9 @@ export class Structure_DB{
         }catch(e){ return false; }
     }
     get_formula(){
+        // formula_structure:{
+        //     "Tab": {"key": "formula"}
+        // }
         try{
             const formula = JSON.parse(
                 fs.readFileSync(

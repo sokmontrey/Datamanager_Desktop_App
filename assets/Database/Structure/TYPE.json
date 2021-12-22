@@ -2,6 +2,10 @@
     "ប្រវត្តិរូបសង្ខេប": {
         "date of birth": "DATE",
         "sex":["male", "female"],
-        "age": "CAL"
+        "age": "DISPLAY"
+    },
+    "test":{
+        "Key1": "DATE",
+        "Key2": "DISPLAY"
     }
 }

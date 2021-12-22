@@ -9,16 +9,16 @@ export function CreateInputElement(props){
     }, [props.value]);
 
     if(Array.isArray(type))
-        return SELECT_TypeInput(list, value, setValue, props);
+        return SELECT_TypeInput(type, value, setValue, props);
     else if(type === 'DATE')
-        return Date_TypeInput(value, setValue, props);
-    else if(type === 'CAL')
-        return CAL_TypeInput(value);
+        return DATE_TypeInput(value, setValue, props);
+    else if(type === 'DISPLAY')
+        return DISPLAY_TypeInput(value);
     else
         return TEXT_TypeInput(value, setValue, props);
 }
 
-function CAL_TypeInput(value){
+function DISPLAY_TypeInput(value){
     return ( <p className='cal-input'>
     {value} </p>);
 }
@@ -32,7 +32,7 @@ function TEXT_TypeInput(value, setValue, props){
         }}
     /> );
 }
-function Date_TypeInput(value, setValue, props){
+function DATE_TypeInput(value, setValue, props){
     return( <input className='date-input'
         type = "date"
         value = {value} 

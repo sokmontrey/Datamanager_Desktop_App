@@ -1,5 +1,8 @@
 {
     "ប្រវត្តិរូបសង្ខេប": {
-        "age": "-short NOW - |date of birth|"
+        "age": "YEAR(NOW()) - YEAR('[date of birth]')+' years'"
+    },
+    "test": {
+        "Key2": "YEAR(NOW()) - YEAR('[Key1]')+' years'"
     }
 }
