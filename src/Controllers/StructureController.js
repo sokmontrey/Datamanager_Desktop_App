@@ -10,7 +10,7 @@ if(process.env.NODE_ENV === "development"){
     database_path = path.join(process.cwd(), 'resources/app/assets/');
 }
 
-export class Schema_DB{
+export default class Structure_DB{
     get_schema(){
         try{
             const schema = JSON.parse(
