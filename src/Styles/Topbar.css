@@ -1,0 +1,15 @@
+#topbar-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--small-padding);
+}
+#topleft{
+    flex: 1;
+}
+#topright{
+    width: 38%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

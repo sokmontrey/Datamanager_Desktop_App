@@ -5,10 +5,14 @@ import {
     get_left_list,
     get_input_type,
     get_list_template,
-    use_formula
+    use_formula,
+    clean_data
 } from "../Controllers/DataController.js";
 
-import { CreateInputElement } from "../Components/Element.js";
+import { 
+    CreateInputElement,
+    Topbar, 
+} from "../Components/Element.js";
 
 export default class MainPage extends React.Component{
     constructor(props){
@@ -18,10 +22,14 @@ export default class MainPage extends React.Component{
 
         this.state = {
             id: props.id,
-            data: get_json_data(props.id)[props.id],
+            data: get_json_data(props.id),
             left_list: left_list,
             tab: left_list[0],
         }
+    }
+
+    componentDidMount(){
+        clean_data();//TODO also here
     }
 
     setTab (tab) { this.setState({ tab: tab }); }
@@ -40,7 +48,7 @@ export default class MainPage extends React.Component{
         const LeftButtonList = left_list.map((key, index)=>
             <button 
             key = {`${key}-${index}`}
-            className = {`button3 ${key===tab?'selected-tab':''}`}
+            className = {`${key===tab?'selected-tab':''} button3 khmer`}
             onClick = {()=>{this.setTab(key)}}>
                 {key}
             </button>
@@ -89,7 +97,8 @@ export default class MainPage extends React.Component{
         for(let key in element) list.push(key);
 
         const RightBlock = list.map((key, sub_index)=>
-            <div key={`${tab}-${key}-${sub_index}`}>
+            <div key={`${tab}-${key}-${sub_index}`}
+            className='khmer label-input-container'>
                 <p className='right-label'>{key}</p>
 
                 <CreateInputElement 
@@ -129,7 +138,7 @@ export default class MainPage extends React.Component{
             )}
 
             {/* button that increment the list */}
-            <button className='button3'
+            <button className='button2'
             onClick={()=>{
                 this.PushList()
             }}>Add</button>
@@ -144,6 +153,7 @@ export default class MainPage extends React.Component{
 
     render(){
         return (<div id='mainpage-container'>
+            <Topbar />
             {this.LeftContainer()}
             {this.RightContainer()}
         </div>);

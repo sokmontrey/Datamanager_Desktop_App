@@ -19,11 +19,11 @@ export function CreateInputElement(props){
 }
 
 function DISPLAY_TypeInput(value){
-    return ( <p className='cal-input'>
+    return ( <p className='display-input'>
     {value} </p>);
 }
 function TEXT_TypeInput(value, setValue, props){
-    return( <input className='text-input'
+    return( <input className='text-input khmer'
         type = "text"
         value = {value} 
         onChange = {(e)=>{
@@ -57,4 +57,32 @@ function SELECT_TypeInput(list, value, setValue, props){
             </option>
         )}
     </select> );
+}
+
+export function Topbar(props){
+    return (<div id='topbar-container'>
+        <div id='topleft'>
+            <button className='button2'>
+                <div className='search-icon icon' />
+                Search
+            </button>
+        </div>
+        <div id='topright'>
+            <button className='button2'>
+                <div className='icon back-icon'/>
+                previous
+            </button>
+            <button className='button2'>
+                <div className='icon next-icon'/>
+                next
+            </button>
+            <button className='button2'>
+                <div className='icon plus-icon'/>
+                new
+            </button>
+            <button className='button3'>
+                <div className='icon delete-icon' />
+            </button>
+        </div>
+    </div>)
 }

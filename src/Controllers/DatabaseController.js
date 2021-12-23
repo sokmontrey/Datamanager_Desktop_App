@@ -95,7 +95,7 @@ export class JSON_DB{
         // }
         try{
             const data = JSON.parse(fs.readFileSync(path.join(database_path, `database/data/${id}.json`)));
-            return data;
+            return data[id];
         }catch(e){ return false; }
     }
 

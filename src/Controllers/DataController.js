@@ -21,6 +21,43 @@ export function get_json_data(id){
     return jdb.read_json(id);
 }
 
+export function clean_data(){//TODO handle this better
+    const all_key = jdb.read_key();
+    const schema = sdb.get_schema();
+    for(let index=0; index<all_key.length; index++){
+        const data = jdb.read_json(all_key[index]);
+        for(let tab in schema){ //add data if it doesn't exist
+            if(data[tab]===undefined) data[tab] = schema[tab];
+
+            if(Array.isArray(data[tab]) && Array.isArray(schema[tab])){
+                for(let i=0; i<data[tab].length; i++){
+                    for(let key in schema[tab][0]){
+                        if(data[tab][i][key]===undefined) data[tab][i][key] = schema[tab][0][key];
+                    }
+                }
+            }else if(!Array.isArray(data[tab]) && !Array.isArray(schema[tab])){
+                for(let key in schema[tab]){
+                    if(data[tab][key]===undefined) data[tab][key] = schema[tab][key]
+                }
+            }
+        }
+
+        for(let tab in data){ //remove data if it doesn't exist in schema
+            if(schema[tab]===undefined) delete data[tab];
+            if(Array.isArray(data[tab])){
+                for(let key in data[tab][0])
+                    if(schema[tab][0][key]===undefined)
+                        for(let i=0; i<data[tab].length; i++)
+                            delete data[tab][i][key];
+            }else{
+                for(let key in data[tab])
+                    if(schema[tab][key]===undefined) delete data[tab][key];
+            }
+        }
+        jdb.update(all_key[index], data);
+    }
+}
+
 export function get_left_list(){
     const schema = sdb.get_schema();
     const list = [];

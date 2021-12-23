@@ -1,0 +1,12 @@
+.display-input{
+    color: var(--primary-color);
+    padding: calc(var(--small-padding)*0.7);
+}
+.selected-tab{
+    color: var(--primary-color);
+}
+.label-input-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

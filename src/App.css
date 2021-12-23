@@ -3,8 +3,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Preahvihear&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@300&display=swap');
 
+@import './Styles/Topbar.css';
+@import './Styles/MainPage.css';
+
+:root{
+    --background-color: white;
+    --primary-color: #0a48f1;
+    --light-primary-color: #ebf0f7;
+    --dark-color: #000000;
+    --dark-primary-color: #0a4780;
+
+    --primary-font: Hanuman, serif;
+    --secondary-font: 'PT Sans', sans-serif;
+
+    --small-padding: 1rem;
+    --small-border: 0.5rem;
+}
+
 * {
     margin: 0;
     padding: 0;
     background-color: white;
+    font-family: var(--primary-color);
+    font-size: 15px;
+    font-weight: normal;
+}
+button{
+    font-family: var(--secondary-font);
+    border-radius: var(--small-border);
+    border: none;
+    padding: calc(var(--small-padding)*0.5) calc(var(--small-padding)*2);
+    outline: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
+button:active{
+    transform: translate(0, 0.3rem);
+}
+
+.khmer{
+    font-family: var(--primary-font);
+}
+
+.button2{
+    color: var(--primary-color);
+    background-color: var(--light-primary-color);
+}
+.button2:hover{
+    transition: 0.2s;
+    background-color: var(--primary-color);
+    color: var(--light-primary-color);
+}
+
+.button3{
+    background: transparent;
+}
+.button3:hover{
+    color: var(--primary-color);
+    transform: translate(0, -0.3rem);
+}
+.button3:active{
+    transform: translate(0, 0.0rem);
+}
+
+input,
+.select-input{
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: calc(var(--small-padding)*0.7);
+    transition: 0.2s;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+input:hover,
+input:focus,
+input:active,
+.select-input:hover,
+.select-input:focus,
+.select-input:active{
+    border-bottom: 0.1rem solid var(--light-primary-color);
 }
