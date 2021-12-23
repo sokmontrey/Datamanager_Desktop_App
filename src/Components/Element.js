@@ -63,25 +63,25 @@ export function Topbar(props){
     return (<div id='topbar-container'>
         <div id='topleft'>
             <button className='button2'>
-                <div className='search-icon icon' />
+                <i className="fi fi-rr-search icon" />
                 Search
             </button>
         </div>
         <div id='topright'>
             <button className='button2'>
-                <div className='icon back-icon'/>
+                <i className="fi fi-rr-angle-small-left icon" />
                 previous
             </button>
             <button className='button2'>
-                <div className='icon next-icon'/>
+                <i className="fi fi-rr-angle-small-right icon" />
                 next
             </button>
             <button className='button2'>
-                <div className='icon plus-icon'/>
+                <i className="fi fi-rr-plus-small icon" />
                 new
             </button>
-            <button className='button3'>
-                <div className='icon delete-icon' />
+            <button className='button3 delete-button'>
+                <i className="fi fi-rr-trash icon" />
             </button>
         </div>
     </div>)

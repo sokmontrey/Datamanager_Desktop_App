@@ -25,6 +25,7 @@ export default class MainPage extends React.Component{
             data: get_json_data(props.id),
             left_list: left_list,
             tab: left_list[0],
+            leftExpand: false
         }
     }
 
@@ -34,26 +35,12 @@ export default class MainPage extends React.Component{
 
     setTab (tab) { this.setState({ tab: tab }); }
     setData (new_data) { this.setState({ data: new_data }); }
+    setLeftExpand(){ this.setState({ leftExpand: !this.state.leftExpand }); }
 
     SaveData(){
         const id = this.state.id;
         const data = this.state.data;
         update_data(id, data, '');
-    }
-
-    LeftContainer(){
-        const left_list = this.state.left_list;
-        const tab = this.state.tab;
-
-        const LeftButtonList = left_list.map((key, index)=>
-            <button 
-            key = {`${key}-${index}`}
-            className = {`${key===tab?'selected-tab':''} button3 khmer`}
-            onClick = {()=>{this.setTab(key)}}>
-                {key}
-            </button>
-        );
-        return LeftButtonList;
     }
 
     OnInputChange(value, key, index){
@@ -88,6 +75,38 @@ export default class MainPage extends React.Component{
         this.SaveData();
     }
 
+    LeftContainer(){
+        const left_list = this.state.left_list;
+        const tab = this.state.tab;
+
+        const LeftButtonList = left_list.map((key, index)=>
+            <button 
+            key = {`${key}-${index}`}
+            className = {`${key===tab?'selected-tab':''} button3 khmer`}
+            onClick = {()=>{this.setTab(key)}}>
+                {key}
+            </button>
+        );
+        return ( <div id='left-container' 
+        style={{flex:this.state.leftExpand?5:1.2}}> {/*expand style*/}
+
+            <div id='left-button-container'>
+                {LeftButtonList}
+            </div>
+
+            {/* a button that when click, it expand left panel */}
+            <button className="button3 left-expand-button"
+            onClick={()=>{
+                this.setLeftExpand();
+            }}>
+                <i className={`fi fi-rr-arrow-small-${
+                    this.state.leftExpand?'left':'right'
+                } icon`} />
+            </button>
+
+        </div> );
+    }
+
     CreateRightBlock(element, index){
         // element: TAB: { 
         //      key: '', value: '' 
@@ -110,7 +129,9 @@ export default class MainPage extends React.Component{
                 />
             </div>
         );
-        return RightBlock;
+        return ( <div id='right-block-container'>
+            {RightBlock}
+        </div> );
     }
 
     RightContainer(){
@@ -123,39 +144,56 @@ export default class MainPage extends React.Component{
             {/* input-label list */}
             {data.map((items, index)=>
                 <div key={index} 
-                className='label-input-block'>
+                className='label-input-block'
+                style={{
+                    borderBottom: index===data.length-1
+                    ?''
+                    :'0.12rem solid var(--light-primary-color)'
+                }}>
                     {this.CreateRightBlock(items, index)}
 
                     {/* button that decrement the list */}
-                    <button style={{
-                        visibility: data.length-1
-                        ?'visible':'hidden'
-                    }}
-                    onClick={()=>{
-                        this.PopList(index)
-                    }}>Delete</button>
+                    <button className='delete-button' 
+                        style={{
+                            visibility: data.length-1
+                            ?'visible':'hidden'
+                        }}
+                        onClick={()=>{
+                            this.PopList(index)
+                        }}>
+                        {/* Delete */}
+                        <i className="fi fi-rr-trash icon" />
+                    </button>
                 </div>
             )}
 
             {/* button that increment the list */}
             <button className='button2'
-            onClick={()=>{
-                this.PushList()
-            }}>Add</button>
+                onClick={()=>{
+                    this.PushList()
+                }}>
+
+                <i className="fi fi-rr-plus-small icon" />
+                add
+            </button>
         </div>
         : //if data is not a list create a single label-input block
-        <div className='label-input-block'>
+        <div>
             {this.CreateRightBlock(data, 0)}
         </div>
 
-        return RightList;
+        return ( <div id='right-container'>
+            {RightList}
+        </div> );
     }
 
     render(){
         return (<div id='mainpage-container'>
             <Topbar />
-            {this.LeftContainer()}
-            {this.RightContainer()}
+            <div id='body-container'>
+                {this.LeftContainer()}
+                {this.RightContainer()}
+            </div>
         </div>);
     }
 

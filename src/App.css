@@ -2,9 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanuman&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Preahvihear&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@300&display=swap');
+@import url('./Styles/Icons/uicons-regular-rounded/uicons-regular-rounded/css/uicons-regular-rounded.css');
 
 @import './Styles/Topbar.css';
 @import './Styles/MainPage.css';
+@import './Styles/Icons/icon.css';
 
 :root{
     --background-color: white;
@@ -29,13 +31,14 @@
     font-weight: normal;
 }
 button{
-    font-family: var(--secondary-font);
+    font-family: var(--primary-font);
     border-radius: var(--small-border);
     border: none;
-    padding: calc(var(--small-padding)*0.5) calc(var(--small-padding)*2);
+    padding: calc(var(--small-padding)*0.5) calc(var(--small-padding)*1.5);
     outline: none;
     transition: 0.2s;
     cursor: pointer;
+    white-space: nowrap;
 }
 button:active{
     transform: translate(0, 0.3rem);
@@ -48,13 +51,16 @@ button:active{
 .button2{
     color: var(--primary-color);
     background-color: var(--light-primary-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
 }
 .button2:hover{
     transition: 0.2s;
     background-color: var(--primary-color);
     color: var(--light-primary-color);
 }
-
 .button3{
     background: transparent;
 }
@@ -67,11 +73,12 @@ button:active{
 }
 
 input,
+.display-input,
 .select-input{
     background: transparent;
     outline: none;
     border: none;
-    padding: calc(var(--small-padding)*0.7);
+    padding: calc(var(--small-padding)*0.4) calc(var(--small-padding)*0.7);
     transition: 0.2s;
     color: var(--primary-color);
     cursor: pointer;
