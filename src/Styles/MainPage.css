@@ -12,7 +12,7 @@
     height: 90vh;
     flex-direction: stretch;
 }
-/* left side's style */
+/* left side's style --------------------------------------*/
 #left-container{
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
     flex: 0.9;
     overflow-x: hidden;
     border-radius: 0 var(--small-border) var(--small-border) 0;
-    transition: 0.7s;
+    transition: 0.9s ease-in-out;
 }
 
 #left-button-container{
@@ -40,6 +40,7 @@
     display: flex;
     justify-content: flex-start;
     margin: 0 0 var(--small-padding) var(--small-padding);
+    color: var(--grey-color);
 }
 .left-expand-button .icon{ font-size: 1.5rem; }
 
@@ -49,7 +50,8 @@
     padding: calc(var(--small-padding)*0.3);
     text-align: left;
 }
-/* right side's style */
+
+/* right side's style ---------------------------------*/
 #right-container{
     flex: 10;
     padding: 0 calc(var(--small-padding) * 1.8);
@@ -66,3 +68,28 @@
     width: 100%;
 }
 .label-input-container input{ flex: 0.9; }
+
+
+#show-key-icon{
+    font-size: 1.5rem;
+    color: var(--grey-color);
+    transition: 0.2s;
+    padding: var(--small-padding);
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+#show-key-icon:hover{
+    color: var(--primary-color);
+}
+#hash_id-text{
+    color: var(--primary-color);
+    display: none;
+    transition: 0.5s;
+    padding-left: var(--small-padding);
+}
+#show-key-icon:hover #hash_id-text{
+    display: block;
+    transition: 0.5s;
+}

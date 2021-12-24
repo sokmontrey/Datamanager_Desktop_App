@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { withRouter } from "react-router";
+
 import {
     update_data, 
     get_json_data,
     get_left_list,
     get_input_type,
     get_list_template,
+    get_all_key,
     use_formula,
+    create_empty,
     clean_data
 } from "../Controllers/DataController.js";
 
@@ -14,18 +18,26 @@ import {
     Topbar, 
 } from "../Components/Element.js";
 
-export default class MainPage extends React.Component{
+class MainPage extends React.Component{
     constructor(props){
         super(props);
 
         const left_list = get_left_list();
+        
+        const all_key = get_all_key();
+        const index = all_key.indexOf(props.id);
 
         this.state = {
             id: props.id,
             data: get_json_data(props.id),
+
             left_list: left_list,
             tab: left_list[0],
-            leftExpand: false
+            leftExpand: false,
+
+            all_key: all_key,
+            next_key: index===all_key.length-1?'':all_key[index+1],
+            previous_key: index===0?'':all_key[index-1],
         }
     }
 
@@ -88,7 +100,7 @@ export default class MainPage extends React.Component{
             </button>
         );
         return ( <div id='left-container' 
-        style={{flex:this.state.leftExpand?5:1.2}}> {/*expand style*/}
+        style={{flex:this.state.leftExpand?7:1.2}}> {/*expand style*/}
 
             <div id='left-button-container'>
                 {LeftButtonList}
@@ -186,15 +198,54 @@ export default class MainPage extends React.Component{
             {RightList}
         </div> );
     }
+    
+    NewData(){
+        const hash_id = create_empty();
+        if(hash_id) {
+            this.props.history.push( `/redirect_to_edit/${hash_id}` );
+        }
+        //TODO: create a better create handler 
+        //also two function below
+    }
+
+    NextData(){
+        const next_key = this.state.next_key;
+        if(next_key) {
+            this.props.history.push(`/redirect_to_edit/${next_key}`);
+        }
+        
+    }
+
+    PreviousData(){
+        const previous_key = this.state.previous_key;
+        if(previous_key) {
+            this.props.history.replace(`/redirect_to_edit/${previous_key}`);
+        }
+    }
 
     render(){
+        
         return (<div id='mainpage-container'>
-            <Topbar />
+            <Topbar 
+            isAtStart={this.state.previous_key===''}
+            isAtEnd={this.state.next_key===''}
+
+            onNew={()=>{this.NewData()}}
+            onNext={()=>{this.NextData()}}
+            onPrevious={()=>{this.PreviousData()}}/>
+
             <div id='body-container'>
                 {this.LeftContainer()}
                 {this.RightContainer()}
             </div>
+            
+            <i className='fi fi-rr-key icon' 
+            id='show-key-icon'>            
+                <p id='hash_id-text'>{this.state.id}</p>
+            </i>
         </div>);
     }
 
 }
+
+export default withRouter(MainPage);

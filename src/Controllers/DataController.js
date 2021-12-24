@@ -21,6 +21,10 @@ export function get_json_data(id){
     return jdb.read_json(id);
 }
 
+export function get_all_key(){
+    return jdb.read_key();
+}
+
 export function clean_data(){//TODO handle this better
     const all_key = jdb.read_key();
     const schema = sdb.get_schema();

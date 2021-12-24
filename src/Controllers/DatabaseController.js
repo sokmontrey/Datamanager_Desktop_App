@@ -21,6 +21,7 @@ export class JSON_DB{
         this.write_json(hash_id, data);
         this.write_key(hash_id);
         this.write_img(hash_id, img_path);
+        return hash_id;
     }
 
     write_json(id, data){

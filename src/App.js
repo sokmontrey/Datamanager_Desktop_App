@@ -1,17 +1,16 @@
 import React from 'react';
 import {
-    HashRouter,
+    HashRouter as Router,
     Route,
     Switch,
-    Redirect,
-    useHistory
+    Redirect
 } from 'react-router-dom';
 
 import MainPage from './Route/MainPage.js';
 
 import { create_empty } from './Controllers/DataController.js';
-
 import { JSON_DB } from './Controllers/DatabaseController.js';
+
 const jdb = new JSON_DB();
 
 export default function App(){
@@ -21,17 +20,28 @@ export default function App(){
     const first_key = all_key[0];
 
     return (
-        <HashRouter>
+        <Router>
             <Switch>
+
                 <Route exact path="/">
-                    <MainPage id={first_key} />
+                    <Redirect to={`/edit/${first_key}`} />
                 </Route>
 
+                <Route exact path='/edit/'>
+                    <Redirect to={`/edit/${first_key}`} />
+                </Route>
+                
+                <Route path='/redirect_to_edit/:id'
+                render={(props)=>{
+                    return <Redirect to={`/edit/${props.match.params.id}`}/>
+                }} />
+
                 <Route path='/edit/:id'
-                render={(props)=>
-                    <MainPage id={props.match.params.id} />
-                } />
+                render={(props)=>{
+                    return <MainPage id={props.match.params.id} />
+                }} />
+
             </Switch>
-        </HashRouter>
+        </Router>
     );
 }
