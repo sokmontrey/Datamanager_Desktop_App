@@ -1,21 +1,25 @@
 import React from "react";
 import { withRouter } from "react-router";
 
-import {
-    update_data, 
+import { 
     get_json_data,
     get_left_list,
     get_input_type,
     get_list_template,
     get_all_key,
+    
     use_formula,
     create_empty,
-    clean_data
+    clean_data,
+
+    update_data,
+    delete_data,
 } from "../Controllers/DataController.js";
 
 import { 
     CreateInputElement,
     Topbar, 
+    DeletePanel
 } from "../Components/Element.js";
 
 class MainPage extends React.Component{
@@ -36,6 +40,7 @@ class MainPage extends React.Component{
             leftExpand: false,
 
             all_key: all_key,
+            index: index,
             next_key: index===all_key.length-1?'':all_key[index+1],
             previous_key: index===0?'':all_key[index-1],
         }
@@ -54,7 +59,6 @@ class MainPage extends React.Component{
         const data = this.state.data;
         update_data(id, data, '');
     }
-
     OnInputChange(value, key, index){
         const new_data = this.state.data;
         const tab = this.state.tab;
@@ -68,7 +72,6 @@ class MainPage extends React.Component{
         else { this.setData(new_data); }
         this.SaveData();
     }
-
     PushList(){
         const new_data = this.state.data;
         const tab = this.state.tab;
@@ -77,7 +80,6 @@ class MainPage extends React.Component{
         this.setData(new_data);
         this.SaveData();
     }
-
     PopList(index){
         const new_data = this.state.data;
         const tab = this.state.tab;
@@ -86,7 +88,6 @@ class MainPage extends React.Component{
         this.setData(new_data);
         this.SaveData();
     }
-
     LeftContainer(){
         const left_list = this.state.left_list;
         const tab = this.state.tab;
@@ -118,7 +119,6 @@ class MainPage extends React.Component{
 
         </div> );
     }
-
     CreateRightBlock(element, index){
         // element: TAB: { 
         //      key: '', value: '' 
@@ -145,7 +145,6 @@ class MainPage extends React.Component{
             {RightBlock}
         </div> );
     }
-
     RightContainer(){
         const tab = this.state.tab;
         const data = this.state.data[tab]
@@ -198,7 +197,6 @@ class MainPage extends React.Component{
             {RightList}
         </div> );
     }
-    
     NewData(){
         const hash_id = create_empty();
         if(hash_id) {
@@ -207,7 +205,6 @@ class MainPage extends React.Component{
         //TODO: create a better create handler 
         //also two function below
     }
-
     NextData(){
         const next_key = this.state.next_key;
         if(next_key) {
@@ -215,24 +212,43 @@ class MainPage extends React.Component{
         }
         
     }
-
     PreviousData(){
         const previous_key = this.state.previous_key;
         if(previous_key) {
             this.props.history.replace(`/redirect_to_edit/${previous_key}`);
         }
     }
+    DeleteData(){
+        if(confirm('Are you sure you want to delete this data?')){
+            const id = this.state.id;   
+            if(delete_data(id)){
+                this.props.history.push('/to_first_data');
+            }
+        }
+    }
+    ToFirst(){
+        const key = this.state.all_key[0];
+        this.props.history.push(`/redirect_to_edit/${key}`);
+    }
+    ToLast(){
+        const key = this.state.all_key[this.state.all_key.length-1];
+        this.props.history.push(`/redirect_to_edit/${key}`);
+    }
 
     render(){
-        
         return (<div id='mainpage-container'>
             <Topbar 
+            key_ratio={`${this.state.index+1}/${this.state.all_key.length}`}
             isAtStart={this.state.previous_key===''}
             isAtEnd={this.state.next_key===''}
 
             onNew={()=>{this.NewData()}}
             onNext={()=>{this.NextData()}}
-            onPrevious={()=>{this.PreviousData()}}/>
+            onPrevious={()=>{this.PreviousData()}}
+            onDelete={()=>{this.DeleteData()}}
+            
+            onFirst={()=>{this.ToFirst()}}
+            onLast={()=>{this.ToLast()}}/>
 
             <div id='body-container'>
                 {this.LeftContainer()}

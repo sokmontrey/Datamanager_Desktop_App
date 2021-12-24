@@ -15,20 +15,28 @@ const jdb = new JSON_DB();
 
 export default function App(){
 
-    const all_key = jdb.read_key();
-    !all_key.length ? create_empty() : null;
-    const first_key = all_key[0];
-
     return (
         <Router>
             <Switch>
 
                 <Route exact path="/">
-                    <Redirect to={`/edit/${first_key}`} />
+                    {()=>{
+                        const all_key = jdb.read_key();
+                        !all_key.length ? create_empty() : null;
+                        const first_key = all_key[0];
+
+                        return <Redirect to={`/edit/${first_key}`} />
+                    }}
                 </Route>
 
-                <Route exact path='/edit/'>
-                    <Redirect to={`/edit/${first_key}`} />
+                <Route exact path='/to_first_data'>
+                    {()=>{
+                        const all_key = jdb.read_key();
+                        !all_key.length ? create_empty() : null;
+                        const first_key = all_key[0];
+                        
+                        return <Redirect to={`/edit/${first_key}`} />
+                    }}
                 </Route>
                 
                 <Route path='/redirect_to_edit/:id'

@@ -21,7 +21,7 @@
     flex: 0.9;
     overflow-x: hidden;
     border-radius: 0 var(--small-border) var(--small-border) 0;
-    transition: 0.9s ease-in-out;
+    transition: 0.7s ease-in-out;
 }
 
 #left-button-container{

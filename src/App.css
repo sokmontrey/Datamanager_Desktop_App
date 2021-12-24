@@ -45,11 +45,11 @@ button:active{
     transform: translate(0, 0.2rem);
 }
 button:disabled{
-    color: var(--grey-color);
+    color: var(--light-primary-color);
     background: transparent;
+    cursor: default;
 }
 button:disabled:hover{
-    cursor: default;
     background: transparent;
 }
 

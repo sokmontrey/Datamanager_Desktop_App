@@ -72,22 +72,33 @@ export function Topbar(props){
         </div>
 
         <div id='topright'>
+            <p id='keytolength-ratio-text'>{props.key_ratio}</p>
+
+            <button className='button2' disabled={props.isAtStart}
+            onClick={props.onFirst}>
+                <i className="fi fi-rr-angle-double-small-left icon" />
+            </button>
+
             <button className='button2' disabled={props.isAtStart}
             onClick={props.onPrevious}>
                 <i className="fi fi-rr-angle-small-left icon" />
-                previous
+                {/* previous */}
             </button>
 
             <button className='button2' disabled={props.isAtEnd}
             onClick={props.onNext}>
                 <i className="fi fi-rr-angle-small-right icon" />
-                next
+                {/* next */}
+            </button>
+
+            <button className='button2' disabled={props.isAtEnd}
+            onClick={props.onLast}>
+                <i className="fi fi-rr-angle-double-small-right icon" />
             </button>
 
             <button className='button2'
             onClick={props.onNew}>
                 <i className="fi fi-rr-plus-small icon" />
-                new
             </button>
 
             <button className='button3 delete-button'
@@ -97,3 +108,4 @@ export function Topbar(props){
         </div>
     </div>)
 }
+

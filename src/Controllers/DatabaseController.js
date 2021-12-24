@@ -19,7 +19,7 @@ export class JSON_DB{
     create(data, img_path){
         const hash_id = sha1(Date.now());
         this.write_json(hash_id, data);
-        this.write_key(hash_id);
+        this.insert_key(hash_id);
         this.write_img(hash_id, img_path);
         return hash_id;
     }
@@ -43,7 +43,7 @@ export class JSON_DB{
         }
     }
 
-    write_key(id){
+    insert_key(id){
         // key_structure: {
         //     key:[a,b,c]
         // }
@@ -59,6 +59,22 @@ export class JSON_DB{
             const old_key = JSON.parse( fs.readFileSync(path.join(database_path, 'database/KEY/key.json')) );
             old_key.key.push(id);
             fs.writeFileSync(path.join(database_path, 'database/KEY/key.json'), JSON.stringify(old_key));
+            return true;
+        }catch(e){ return false; }
+    }
+
+    write_key(key_list){
+        try{
+            //check if key.json exists or not. if not create a key.json file   
+            if(!fs.existsSync(path.join(database_path, 'database/KEY/key.json'))){
+                fs.writeFileSync(
+                    path.join(database_path, 'database/KEY/key.json'), 
+                    JSON.stringify({key:[]})
+                );
+            }
+
+            const key = { key: key_list };
+            fs.writeFileSync(path.join(database_path, 'database/KEY/key.json'), JSON.stringify(key));
             return true;
         }catch(e){ return false; }
     }
@@ -133,6 +149,17 @@ export class JSON_DB{
     delete(id){
         this.delete_json(id);
         this.delete_img(id);
+        return this.delete_key(id);
+    }
+
+    delete_key(id){
+        try{
+            const all_key = this.read_key();
+            //all_key: [1,2,3]
+            const new_key_list = all_key.filter(key => key !== id);
+            this.write_key(new_key_list);
+            return true;
+        }catch(e){ return false; }
     }
 
     delete_json(id){

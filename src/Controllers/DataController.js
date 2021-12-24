@@ -9,6 +9,10 @@ export function create_data(data, img_path){
     return jdb.create(data, img_path);
 }
 
+export function delete_data(id){
+    return jdb.delete(id);
+}
+
 export function create_empty(){
     return create_data(sdb.get_schema(), '');
 }
