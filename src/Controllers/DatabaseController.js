@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import sha1 from 'sha1';
 import * as path from 'path';
-import xslx from 'xlsx';
+import xlsx from 'xlsx';
 
 import process from 'process';
 // const database_path = path.join(process.cwd(), 'resources/app/assets/');
@@ -25,7 +25,52 @@ export class JSON_DB{
         return hash_id;
     }
 
-    
+    create_sheet_from_tab(tab){
+        //a function that take json and write it into xlsx
+        //return the path of xlsx file
+        try{
+            const data = [];
+            const all_key = this.read_key();
+            for(let index=0; index<all_key.length; index++){
+                const json_data = this.read_json(all_key[index])[tab];
+                if(Array.isArray(json_data)){
+                    for(let sub_index=0; sub_index<json_data.length; sub_index++){
+                        json_data[sub_index]['no'] =sub_index+1;
+                        json_data[sub_index]['hash_id'] = !sub_index
+                        ?all_key[index]:'---';
+                        data.push(json_data[sub_index]); 
+                    }
+                }else{
+                    json_data['hash_id'] = all_key[index];
+                    data.push(json_data);
+                }
+            }
+            
+            const ws = xlsx.utils.json_to_sheet(data);
+            return ws;
+        }catch(e) {return false;}
+    }
+
+    create_all_xlsx(schema){
+        try{
+            const date = Date.now();
+            const xlsx_path = path.join(
+                database_path, 
+                `database/XLSX/${date}.xlsx`
+            );
+
+            const wb = xlsx.utils.book_new();
+            for(let tab in schema){
+                const ws = this.create_sheet_from_tab(tab);
+                if(ws){
+                    xlsx.utils.book_append_sheet(wb, ws, tab);
+                }
+            }
+            xlsx.writeFile(wb, xlsx_path);
+            console.log('write');
+            return xlsx_path;
+        }catch(e){return false;}
+    }
 
     write_json(id, data){
         // data_structure:{

@@ -95,10 +95,15 @@ function SELECT_TypeInput(list, value, setValue, props){
             setValue(e.target.value)
             props.onChange(e.target.value)
         }} >
+            
+        <option className='option' value=''>
+            {'Please choose an option'}
+        </option>
 
         {list.map((item, index)=>
             <option key={`${item}-${index}`}
-            className='option'>
+            className='option'
+            value={item}>
                 {item}
             </option>
         )}

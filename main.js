@@ -74,7 +74,7 @@ function createMainWindow() {
 		},
 		menu: Menu.setApplicationMenu(
 			Menu.buildFromTemplate(menu_template)
-		),
+		)
 	});
 
 	let indexPath;
