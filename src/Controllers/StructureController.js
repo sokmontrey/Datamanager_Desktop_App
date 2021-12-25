@@ -57,4 +57,13 @@ export class Structure_DB{
             return type;
         }catch(e){ return false; }
     }
+    write_type(new_type){
+        try{
+            fs.writeFileSync(
+                path.join(database_path,
+                'database/structure/TYPE.json'),
+                JSON.stringify(new_type)
+            );
+        } catch(e) { return false; }
+    }
 }

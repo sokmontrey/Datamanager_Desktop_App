@@ -68,7 +68,7 @@
     width: 100%;
 }
 .label-input-container input{ flex: 0.9; }
-
+.label-input-block{ padding-bottom: var(--small-padding); }
 
 #show-key-icon{
     font-size: 1.5rem;
@@ -92,4 +92,26 @@
 #show-key-icon:hover #hash_id-text{
     display: block;
     transition: 0.5s;
+}
+.select-input-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.select-input-container:hover{
+    line-height: 0;
+}
+.insert-select-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 0;
+    overflow-x: hidden;
+    transition: 0.8s;
+}
+.select-insert-input{
+    flex: 0;
+    min-width: 0;
 }

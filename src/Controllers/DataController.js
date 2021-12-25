@@ -17,6 +17,15 @@ export function create_empty(){
     return create_data(sdb.get_schema(), '');
 }
 
+export function insert_select_element(tab, key, new_element){
+    try{
+        const old_type = sdb.get_type();
+        old_type[tab][key].push(new_element);
+        sdb.write_type(old_type);
+        return true;
+    }catch(e){ return false; }
+}
+
 export function update_data(id, data, img_path){
     return jdb.update(id, data, img_path);
 }

@@ -13,6 +13,7 @@ import {
     clean_data,
 
     update_data,
+    insert_select_element,
     delete_data,
 } from "../Controllers/DataController.js";
 
@@ -53,6 +54,7 @@ class MainPage extends React.Component{
     setTab (tab) { this.setState({ tab: tab }); }
     setData (new_data) { this.setState({ data: new_data }); }
     setLeftExpand(){ this.setState({ leftExpand: !this.state.leftExpand }); }
+    forceUpdate(){ this.setState({}); }
 
     SaveData(){
         const id = this.state.id;
@@ -137,6 +139,10 @@ class MainPage extends React.Component{
                     value = {element[key]}
                     onChange = {(value)=>{
                         this.OnInputChange(value, key, index);
+                    }}
+                    onInsert = {(value)=>{
+                        insert_select_element(tab, key, value);
+                        this.forceUpdate();
                     }}
                 />
             </div>
@@ -248,7 +254,7 @@ class MainPage extends React.Component{
             onDelete={()=>{this.DeleteData()}}
             
             onFirst={()=>{this.ToFirst()}}
-            onLast={()=>{this.ToLast()}}/>
+            onLast={()=>{this.ToLast()}} />
 
             <div id='body-container'>
                 {this.LeftContainer()}

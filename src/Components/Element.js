@@ -8,14 +8,59 @@ export function CreateInputElement(props){
         setValue(props.value);
     }, [props.value]);
 
-    if(Array.isArray(type))
-        return SELECT_TypeInput(type, value, setValue, props);
-    else if(type === 'DATE')
+    if(Array.isArray(type)){
+        const [focus, setFocus] = useState(false);
+
+        return ( <div className='select-input-container'
+        onFocus={()=>{setFocus(true)}}
+        onBlur={()=>{setFocus(false)}}>
+
+            {SELECT_TypeInput(type, value, setValue, props)}
+
+            <CreateInsertSelect
+            focus={focus}
+            setFocus={setFocus}
+            onInsert={(value)=>{
+                props.onInsert(value);
+            }}/>
+
+        </div>);
+    }else if(type === 'DATE'){
         return DATE_TypeInput(value, setValue, props);
-    else if(type === 'DISPLAY')
+    }else if(type === 'DISPLAY'){
         return DISPLAY_TypeInput(value);
-    else
+    }else{
         return TEXT_TypeInput(value, setValue, props);
+    }
+}
+
+function CreateInsertSelect(props){
+    const [value, setValue] = useState(''); 
+
+    return (<div className='insert-select-container'
+    style={{ width: props.focus?'100%':'0%' }}>
+
+        <input className='text-input khmer select-insert-input' 
+        placeholder='insert...'
+        type='text'
+        value={value}
+        onFocus={()=>{ props.setFocus(true) }}
+        onBlur={()=>{ props.setFocus(false) }}
+        onChange={(e)=>{
+            setValue(e.target.value);
+        }} />
+
+        <button className='button3'
+        onClick={()=>{
+            if(value){ 
+                props.onInsert(value); 
+                setValue('');
+            }
+        }}>
+            <i className='fi fi-rr-plus-small icon' />
+        </button>
+        
+    </div>);
 }
 
 function DISPLAY_TypeInput(value){
@@ -59,7 +104,6 @@ function SELECT_TypeInput(list, value, setValue, props){
         )}
     </select> );
 }
-
 export function Topbar(props){
 
     return (<div id='topbar-container'>
