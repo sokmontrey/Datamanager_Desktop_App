@@ -125,3 +125,7 @@ export function use_formula(data, tab){
     }
     return [new_data, working];
 }
+
+export function open_str_folder(){
+    return sdb.open_structure_folder();
+}

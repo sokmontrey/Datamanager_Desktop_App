@@ -260,7 +260,7 @@ class MainPage extends React.Component{
                 {this.LeftContainer()}
                 {this.RightContainer()}
             </div>
-            
+
             <i className='fi fi-rr-key icon' 
             id='show-key-icon'>            
                 <p id='hash_id-text'>{this.state.id}</p>

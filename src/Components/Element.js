@@ -59,7 +59,7 @@ function CreateInsertSelect(props){
         }}>
             <i className='fi fi-rr-plus-small icon' />
         </button>
-        
+
     </div>);
 }
 
@@ -152,4 +152,3 @@ export function Topbar(props){
         </div>
     </div>)
 }
-

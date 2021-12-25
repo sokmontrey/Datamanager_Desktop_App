@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import sha1 from 'sha1';
 import * as path from 'path';
+import xslx from 'xlsx';
 
 import process from 'process';
 // const database_path = path.join(process.cwd(), 'resources/app/assets/');
@@ -23,6 +24,8 @@ export class JSON_DB{
         this.write_img(hash_id, img_path);
         return hash_id;
     }
+
+    
 
     write_json(id, data){
         // data_structure:{

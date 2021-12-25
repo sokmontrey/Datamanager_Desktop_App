@@ -26,7 +26,7 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: white;
+    background-color: var(--background-color);
     font-family: var(--primary-color);
     font-size: 15px;
     font-weight: normal;
@@ -52,6 +52,19 @@ button:disabled{
 }
 button:disabled:hover{
     background: transparent;
+}
+
+/* make scroll bar smaller and simpler and minilistic looking */
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--light-primary-color);
+    border-radius: var(--small-border);
 }
 
 .khmer{
