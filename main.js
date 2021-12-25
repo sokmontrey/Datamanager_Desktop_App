@@ -38,6 +38,16 @@ function createMainWindow() {
 					}
 				},
 				{
+					label: 'Open XLSX',
+					click: () => {
+						const xlsx_path = path.join(
+							database_path,
+							'database/XLSX'
+						);
+						shell.openPath(xlsx_path);
+					}
+				},
+				{
 					label: 'Exit',
 					click: () => { app.quit() }
 				}
