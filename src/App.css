@@ -106,6 +106,9 @@ input,
     color: var(--primary-color);
     cursor: pointer;
 }
+.select-input{
+    max-width: 15rem;
+}
 .display-input{
     color: var(--grey-color);
     cursor: none;

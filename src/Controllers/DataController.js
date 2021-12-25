@@ -6,6 +6,7 @@ const jdb = new JSON_DB();
 const sdb = new Structure_DB();
 
 export function create_xlsx(){
+    clean_data();
     return jdb.create_all_xlsx(sdb.get_schema());
 }
 

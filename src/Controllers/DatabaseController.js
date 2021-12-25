@@ -68,7 +68,7 @@ export class JSON_DB{
             }
             xlsx.writeFile(wb, xlsx_path);
             console.log('write');
-            return xlsx_path;
+            return `${date}.xlsx`;
         }catch(e){return false;}
     }
 

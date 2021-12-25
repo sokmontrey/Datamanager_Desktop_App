@@ -1,1 +1,24 @@
-{"ប្រវត្តិរូបសង្ខេប":{"date of birth":"DATE","sex":["male","female"],"age":"DISPLAY","test select":["1","2","Hello"]},"test":{"Key1":"DATE","Key2":"DISPLAY","Key3":["1","2","Testing"]}}
+{
+    "ប្រវត្តិរូបសង្ខេប": {
+        "date of birth": "DATE",
+        "sex": [
+            "male",
+            "female"
+        ],
+        "age": "DISPLAY",
+        "test select": [
+            "1",
+            "2",
+            "Hello"
+        ]
+    },
+    "test": {
+        "Key1": "DATE",
+        "Key2": "DISPLAY",
+        "Key3": [
+            "1",
+            "2",
+            "Testing"
+        ]
+    }
+}
