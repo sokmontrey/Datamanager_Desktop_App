@@ -4,6 +4,7 @@ const { app, BrowserWindow, Menu, shell} = require('electron');
 
 let mainWindow
 let isDev = false
+//testing
 
 if (
 	process.env.NODE_ENV !== undefined &&
