@@ -1,0 +1,19 @@
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    background-size: contain;
+    font-size: 1.2rem;
+}
+.delete-button .icon{ 
+    margin: 0rem;
+    color: var(--dark-primary-color);
+}
+.delete-button:hover .icon{
+    transform: translate(0, -0.1rem);
+    color: red;
+}
+.delete-button:active .icon{
+    transform: translate(0, 0.0rem);
+}

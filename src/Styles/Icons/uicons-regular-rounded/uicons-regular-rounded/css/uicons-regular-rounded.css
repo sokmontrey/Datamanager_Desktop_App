@@ -1,0 +1,74 @@
+@font-face {
+font-family: "uicons-regular-rounded";
+src: url("../webfonts/uicons-regular-rounded.eot#iefix") format("embedded-opentype"),
+url("../webfonts/uicons-regular-rounded.woff2") format("woff2"),
+url("../webfonts/uicons-regular-rounded.woff") format("woff");
+}
+
+    i[class^="fi-rr-"]:before, i[class*=" fi-rr-"]:before, span[class^="fi-rr-"]:before, span[class*="fi-rr-"]:before {
+font-family: uicons-regular-rounded !important;
+font-style: normal;
+font-weight: normal !important;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+   
+        .fi-rr-angle-double-small-left:before {
+    content: "\f10b";
+    }
+        .fi-rr-angle-double-small-right:before {
+    content: "\f10c";
+    }
+    
+        .fi-rr-angle-small-left:before {
+    content: "\f111";
+    }
+        .fi-rr-angle-small-right:before {
+    content: "\f112";
+    }
+        .fi-rr-arrow-down:before {
+    content: "\f11b";
+    }
+        .fi-rr-arrow-from-bottom:before {
+    content: "\f11c";
+    }
+        .fi-rr-arrow-left:before {
+    content: "\f11d";
+    }
+        .fi-rr-arrow-right:before {
+    content: "\f11e";
+    }
+        .fi-rr-arrow-small-down:before {
+    content: "\f11f";
+    }
+        .fi-rr-arrow-small-left:before {
+    content: "\f120";
+    }
+        .fi-rr-arrow-small-right:before {
+    content: "\f121";
+    }
+        .fi-rr-arrow-small-up:before {
+    content: "\f122";
+    }
+        .fi-rr-cross-small:before {
+    content: "\f186";
+    }
+        .fi-rr-home:before {
+    content: "\f1ec";
+    }
+        .fi-rr-key:before {
+    content: "\f1fc";
+    }
+        .fi-rr-minus-small:before {
+    content: "\f227";
+    }
+        .fi-rr-plus-small:before {
+    content: "\f24d";
+    }
+        .fi-rr-trash:before {
+    content: "\f2cf";
+    }

@@ -6,7 +6,6 @@ release-builds/
 #################################
 .tmp/
 node_modules/
-src/Styles/Icons/
 *.compiled.*
 
 # Folder config file #
