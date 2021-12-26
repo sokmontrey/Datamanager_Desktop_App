@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { withRouter } from "react-router";
 
 import { 
@@ -7,10 +7,12 @@ import {
     get_input_type,
     get_list_template,
     get_all_key,
+	get_img_path,
     
     use_formula,
     create_empty,
     clean_data,
+	write_img,
 
     update_data,
     insert_select_element,
@@ -35,6 +37,7 @@ class MainPage extends React.Component{
         this.state = {
             id: props.id,
             data: get_json_data(props.id),
+			img_path: get_img_path(props.id) || '',
 
             left_list: left_list,
             tab: left_list[0],
@@ -42,7 +45,7 @@ class MainPage extends React.Component{
 
             all_key: all_key,
             index: index,
-            next_key: index===all_key.length-1?'':all_key[index+1],
+			next_key: index===all_key.length-1?'':all_key[index+1],
             previous_key: index===0?'':all_key[index-1],
         }
     }
@@ -55,6 +58,7 @@ class MainPage extends React.Component{
     setData (new_data) { this.setState({ data: new_data }); }
     setLeftExpand(){ this.setState({ leftExpand: !this.state.leftExpand }); }
     forceUpdate(){ this.setState({}); }
+	setImgPath(new_img_path){ this.setState({ img_path: new_img_path }) }
 
     SaveData(){
         const id = this.state.id;
@@ -104,6 +108,19 @@ class MainPage extends React.Component{
         );
         return ( <div id='left-container' 
         style={{flex:this.state.leftExpand?7:1.2}}> {/*expand style*/}
+
+			{/* create a element with className='profile-picture' take take an image path and display it */}
+			<img className='profile-picture' src={this.state.img_path}/> 
+
+			<input type='file'
+			accept='image/*'
+			className='profile-input' 
+			onChange={(e)=>{
+				const file = e.target.files[0];
+				const img_path = file.path;
+				write_img(this.state.id, img_path);
+				this.setImgPath(img_path);
+			}}/>
 
             <div id='left-button-container'>
                 {LeftButtonList}
@@ -194,10 +211,11 @@ class MainPage extends React.Component{
                 add
             </button>
         </div>
-        : //if data is not a list create a single label-input block
+        : 
         <div>
             {this.CreateRightBlock(data, 0)}
         </div>
+			
 
         return ( <div id='right-container'>
             {RightList}

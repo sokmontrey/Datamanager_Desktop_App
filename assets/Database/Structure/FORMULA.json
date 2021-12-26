@@ -3,6 +3,6 @@
         "age": "YEAR(NOW()) - YEAR('[date of birth]')+' years'"
     },
     "test": {
-        "Key2": "YEAR(NOW()) - YEAR('[Key1]')+' years'"
+        "Key2": "YEAR(NOW()) - YEAR('[ប្រវត្តិរូបសង្ខេប:age]')+' years'"
     }
 }

@@ -1,13 +1,20 @@
 import { JSON_DB } from './DatabaseController.js';
 import { Structure_DB } from './StructureController.js';
 import { apply_math } from './MathController.js';
-
 const jdb = new JSON_DB();
 const sdb = new Structure_DB();
 
 export function create_xlsx(){
     clean_data();
     return jdb.create_all_xlsx(sdb.get_schema());
+}
+
+export function write_img(id, img_path){
+	return jdb.write_img(id, img_path);
+}
+
+export function get_img_path(id){
+	return jdb.read_img(id);
 }
 
 export function create_data(data, img_path){

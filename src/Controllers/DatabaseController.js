@@ -133,6 +133,7 @@ export class JSON_DB{
                 img_path, 
                 path.join(database_path,`database/Media/${id}.png`)
             );
+			console.log("true", img_path);
             return true;
         }catch(e){ return false; }
     }
