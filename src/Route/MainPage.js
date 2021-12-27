@@ -96,7 +96,9 @@ class MainPage extends React.Component{
         style={{flex:this.state.leftExpand?7:1.2}}> {/*expand style*/}
 
 			{/* create a element with className='profile-picture' take take an image path and display it */}
-            <img className='profile-picture' src={this.state.img_path} />
+            <div className='profile-picture-container'>
+                <img className='profile-picture' src={this.state.img_path} />
+            </div>
 
 			<input type='file'
 			accept='image/*'

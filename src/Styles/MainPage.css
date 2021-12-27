@@ -36,10 +36,15 @@
   overflow-y: scroll;
   background: transparent;
 }
-.profile-picture {
+.profile-picture-container{
   width: 3rem;
   height: 3rem;
+  overflow: hidden;
   border-radius: 100%;
+}
+.profile-picture {
+  width: 3rem;
+  height:auto;
   background-color: var(--grey-color);
   margin: var(--small-padding);
 }
