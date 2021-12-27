@@ -48,47 +48,47 @@ class MainPage extends React.Component{
 	setImgPath(new_img_path){ this.setState({ img_path: new_img_path }) }
 
     SaveData(){
-        const id = this.state.id;
-        const data = this.state.data;
-        jdb.update(id, data, '');
+        // const id = this.state.id;
+        // const data = this.state.data;
+        jdb.update(this.state.id, this.state.data, '');
     }
     OnInputChange(value, key, index){
         const new_data = this.state.data;
-        const tab = this.state.tab;
+        // const tab = this.state.tab;
 
-        if(Array.isArray(new_data[tab])) 
-            new_data[tab][index][key] = value;
-        else new_data[tab][key] = value;
+        if(Array.isArray(new_data[this.state.tab])) 
+            new_data[this.state.tab][index][key] = value;
+        else new_data[this.state.tab][key] = value;
 
-        const [cal, working] = dc.use_formula(new_data, tab);
+        const [cal, working] = dc.use_formula(new_data, this.state.tab);
         if(working) this.setData(cal)
         else { this.setData(new_data); }
         this.SaveData();
     }
     PushList(){
         const new_data = this.state.data;
-        const tab = this.state.tab;
+        // const tab = this.state.tab;
 
-        new_data[tab].push(dc.get_list_template(tab));
+        new_data[this.state.tab].push(dc.get_list_template(this.state.tab));
         this.setData(new_data);
         this.SaveData();
     }
     PopList(index){
         const new_data = this.state.data;
-        const tab = this.state.tab;
+        // const tab = this.state.tab;
 
-        new_data[tab].splice(index, 1);
+        new_data[this.state.tab].splice(index, 1);
         this.setData(new_data);
         this.SaveData();
     }
     LeftContainer(){
-        const left_list = this.state.left_list;
-        const tab = this.state.tab;
+        // const left_list = this.state.left_list;
+        // const tab = this.state.tab;
 
-        const LeftButtonList = left_list.map((key, index)=>
+        const LeftButtonList = this.state.left_list.map((key, index)=>
             <button 
             key = {`${key}-${index}`}
-            className = {`${key===tab?'selected-tab':''} button3 khmer`}
+            className = {`${key===this.state.tab?'selected-tab':''} button3 khmer`}
             onClick = {()=>{this.setTab(key)}}>
                 {key}
             </button>
@@ -97,7 +97,7 @@ class MainPage extends React.Component{
         style={{flex:this.state.leftExpand?7:1.2}}> {/*expand style*/}
 
 			{/* create a element with className='profile-picture' take take an image path and display it */}
-			<img className='profile-picture' src={this.state.img_path}/> 
+            <img className='profile-picture' src={this.state.img_path} />
 
 			<input type='file'
 			accept='image/*'
@@ -129,23 +129,23 @@ class MainPage extends React.Component{
         // element: TAB: { 
         //      key: '', value: '' 
         // }
-        const tab = this.state.tab;
+        // const tab = this.state.tab;
         const list = [];
         for(let key in element) list.push(key);
 
         const RightBlock = list.map((key, sub_index)=>
-            <div key={`${tab}-${key}-${sub_index}`}
+            <div key={`${this.state.tab}-${key}-${sub_index}`}
             className='khmer label-input-container'>
                 <p className='right-label'>{key}</p>
 
                 <CreateInputElement 
-                    type = {dc.get_input_type(tab, key)}
+                    type = {dc.get_input_type(this.state.tab, key)}
                     value = {element[key]}
                     onChange = {(value)=>{
                         this.OnInputChange(value, key, index);
                     }}
                     onInsert = {(value)=>{
-                        dc.insert_select_element(tab, key, value);
+                        dc.insert_select_element(this.state.tab, key, value);
                         this.forceUpdate();
                     }}
                 />
@@ -156,8 +156,8 @@ class MainPage extends React.Component{
         </div> );
     }
     RightContainer(){
-        const tab = this.state.tab;
-        const data = this.state.data[tab]
+        // const tab = this.state.tab;
+        const data = this.state.data[this.state.tab]
 
         const RightList = Array.isArray(data) 
         ? //if data is a list create multiple label-input block
@@ -217,22 +217,22 @@ class MainPage extends React.Component{
         //also two function below
     }
     NextData(){
-        const next_key = this.state.next_key;
-        if(next_key) {
-            this.props.history.push(`/redirect_to_edit/${next_key}`);
+        // const next_key = this.state.next_key;
+        if(this.state.next_key) {
+            this.props.history.push(`/redirect_to_edit/${this.state.next_key}`);
         }
         
     }
     PreviousData(){
-        const previous_key = this.state.previous_key;
-        if(previous_key) {
-            this.props.history.replace(`/redirect_to_edit/${previous_key}`);
+        // const previous_key = this.state.previous_key;
+        if(this.state.previous_key) {
+            this.props.history.replace(`/redirect_to_edit/${this.state.previous_key}`);
         }
     }
     DeleteData(){
         if(confirm('Are you sure you want to delete this data?')){
-            const id = this.state.id;   
-            if(jdb.delete(id)){
+            // const id = this.state.id;   
+            if(jdb.delete(this.state.id)){
                 this.props.history.push('/to_first_data');
             }
         }
