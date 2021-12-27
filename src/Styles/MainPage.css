@@ -37,10 +37,14 @@
   background: transparent;
 }
 .profile-picture {
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 100%;
   background-color: var(--grey-color);
+  margin: var(--small-padding);
+}
+.profile-input{
+  padding: calc(var(--small-padding)*0.3) calc(var(--small-padding));
 }
 
 .left-expand-button {
@@ -55,7 +59,7 @@
 
 #left-container button {
   transition: 0.5s;
-  padding: calc(var(--small-padding) * 0.3);
+  padding: 0;
   text-align: left;
 }
 

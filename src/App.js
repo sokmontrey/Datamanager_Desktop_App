@@ -8,10 +8,11 @@ import {
 
 import MainPage from './Route/MainPage.js';
 
-import { create_empty } from './Controllers/DataController.js';
+import { Data_Controller } from './Controllers/DataController.js';
 import { JSON_DB } from './Controllers/DatabaseController.js';
 
 const jdb = new JSON_DB();
+const dc = new Data_Controller();
 
 export default function App(){
 
@@ -21,8 +22,11 @@ export default function App(){
 
                 <Route exact path="/">
                     {()=>{
-                        const all_key = jdb.read_key();
-                        !all_key.length ? create_empty() : null;
+                        var all_key = jdb.read_key();
+                        if(!all_key.length){
+                            dc.create_empty();
+                            all_key = jdb.read_key();
+                        }
                         const first_key = all_key[0];
 
                         return <Redirect to={`/edit/${first_key}`} />
