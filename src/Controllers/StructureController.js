@@ -11,14 +11,7 @@ if(process.env.NODE_ENV === "development"){
 }
 
 export class Structure_DB{
-    open_structure_folder(){
-        const str_path = path.join(database_path, 'database/structure/')
-        //use fs to open str_path dir in file explorer
-        try{
-            fs.readdirSync(str_path);
-            return true;
-        }catch(e){ return false; }
-    }
+    constructor(){}
 
     get_schema(){
         // schema_structure:{

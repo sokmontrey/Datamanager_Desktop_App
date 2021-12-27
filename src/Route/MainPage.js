@@ -1,43 +1,30 @@
 import React, {useEffect} from "react";
 import { withRouter } from "react-router";
 
-import { 
-    get_json_data,
-    get_left_list,
-    get_input_type,
-    get_list_template,
-    get_all_key,
-	get_img_path,
-    
-    use_formula,
-    create_empty,
-    clean_data,
-	write_img,
+import { Data_Controller } from "../Controllers/DataController.js";
+import { JSON_DB } from '../Controllers/DatabaseController.js';
 
-    update_data,
-    insert_select_element,
-    delete_data,
-} from "../Controllers/DataController.js";
+const dc = new Data_Controller();
+const jdb = new JSON_DB();
 
 import { 
     CreateInputElement,
-    Topbar, 
-    DeletePanel
+    Topbar
 } from "../Components/Element.js";
 
 class MainPage extends React.Component{
     constructor(props){
         super(props);
 
-        const left_list = get_left_list();
+        const left_list = dc.get_left_list();
         
-        const all_key = get_all_key();
+        const all_key = jdb.read_key();
         const index = all_key.indexOf(props.id);
 
         this.state = {
             id: props.id,
-            data: get_json_data(props.id),
-			img_path: get_img_path(props.id) || '',
+            data: jdb.read_json(props.id),
+			img_path: jdb.read_img(props.id) || '',
 
             left_list: left_list,
             tab: left_list[0],
@@ -50,9 +37,9 @@ class MainPage extends React.Component{
         }
     }
 
-    componentDidMount(){
-        clean_data();//TODO also here
-    }
+    // componentDidMount(){
+    //     dc.clean_data();//TODO also here
+    // }
 
     setTab (tab) { this.setState({ tab: tab }); }
     setData (new_data) { this.setState({ data: new_data }); }
@@ -63,7 +50,7 @@ class MainPage extends React.Component{
     SaveData(){
         const id = this.state.id;
         const data = this.state.data;
-        update_data(id, data, '');
+        jdb.update(id, data, '');
     }
     OnInputChange(value, key, index){
         const new_data = this.state.data;
@@ -73,7 +60,7 @@ class MainPage extends React.Component{
             new_data[tab][index][key] = value;
         else new_data[tab][key] = value;
 
-        const [cal, working] = use_formula(new_data, tab);
+        const [cal, working] = dc.use_formula(new_data, tab);
         if(working) this.setData(cal)
         else { this.setData(new_data); }
         this.SaveData();
@@ -82,7 +69,7 @@ class MainPage extends React.Component{
         const new_data = this.state.data;
         const tab = this.state.tab;
 
-        new_data[tab].push(get_list_template(tab));
+        new_data[tab].push(dc.get_list_template(tab));
         this.setData(new_data);
         this.SaveData();
     }
@@ -118,7 +105,7 @@ class MainPage extends React.Component{
 			onChange={(e)=>{
 				const file = e.target.files[0];
 				const img_path = file.path;
-				write_img(this.state.id, img_path);
+				jdb.write_img(this.state.id, img_path);
 				this.setImgPath(img_path);
 			}}/>
 
@@ -152,13 +139,13 @@ class MainPage extends React.Component{
                 <p className='right-label'>{key}</p>
 
                 <CreateInputElement 
-                    type = {get_input_type(tab, key)}
+                    type = {dc.get_input_type(tab, key)}
                     value = {element[key]}
                     onChange = {(value)=>{
                         this.OnInputChange(value, key, index);
                     }}
                     onInsert = {(value)=>{
-                        insert_select_element(tab, key, value);
+                        dc.insert_select_element(tab, key, value);
                         this.forceUpdate();
                     }}
                 />
@@ -222,7 +209,7 @@ class MainPage extends React.Component{
         </div> );
     }
     NewData(){
-        const hash_id = create_empty();
+        const hash_id = dc.create_empty();
         if(hash_id) {
             this.props.history.push( `/redirect_to_edit/${hash_id}` );
         }
@@ -245,7 +232,7 @@ class MainPage extends React.Component{
     DeleteData(){
         if(confirm('Are you sure you want to delete this data?')){
             const id = this.state.id;   
-            if(delete_data(id)){
+            if(jdb.delete(id)){
                 this.props.history.push('/to_first_data');
             }
         }
@@ -258,7 +245,6 @@ class MainPage extends React.Component{
         const key = this.state.all_key[this.state.all_key.length-1];
         this.props.history.push(`/redirect_to_edit/${key}`);
     }
-
     render(){
         return (<div id='mainpage-container'>
             <Topbar 
