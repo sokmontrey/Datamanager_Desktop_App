@@ -36,20 +36,20 @@
   overflow-y: scroll;
   background: transparent;
 }
-.profile-picture-container{
+.profile-picture-container {
   width: 3rem;
   height: 3rem;
   overflow: hidden;
   border-radius: 100%;
+  margin: var(--small-padding);
 }
 .profile-picture {
   width: 3rem;
-  height:auto;
+  height: auto;
   background-color: var(--grey-color);
-  margin: var(--small-padding);
 }
-.profile-input{
-  padding: calc(var(--small-padding)*0.3) calc(var(--small-padding));
+.profile-input {
+  padding: calc(var(--small-padding) * 0.3) calc(var(--small-padding));
 }
 
 .left-expand-button {
@@ -136,4 +136,3 @@
   flex: 0;
   min-width: 0;
 }
-

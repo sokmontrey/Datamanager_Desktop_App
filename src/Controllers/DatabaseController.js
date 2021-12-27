@@ -67,7 +67,6 @@ export class JSON_DB{
                 }
             }
             xlsx.writeFile(wb, xlsx_path);
-            console.log('write');
             return `${date}.xlsx`;
         }catch(e){return false;}
     }
@@ -133,7 +132,6 @@ export class JSON_DB{
                 img_path, 
                 path.join(database_path,`database/Media/${id}.png`)
             );
-			console.log("true", img_path);
             return true;
         }catch(e){ return false; }
     }

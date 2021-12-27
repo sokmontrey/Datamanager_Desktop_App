@@ -1,25 +1,27 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React from "react";
 import { withRouter } from "react-router";
 
 import { Data_Controller } from "../Controllers/DataController.js";
 import { JSON_DB } from '../Controllers/DatabaseController.js';
+import { Structure_DB } from "../Controllers/StructureController.js";
 
 const dc = new Data_Controller();
 const jdb = new JSON_DB();
+const sdb = new Structure_DB();
 
 import { 
     CreateInputElement,
     Topbar
 } from "../Components/Element.js";
 
+import { SearchPanel } from "../Components/SearchPanel.js";
+
 class MainPage extends React.Component{
     constructor(props){
         super(props);
 
         dc.clean_data();
-
         const left_list = dc.get_left_list();
-        
         const all_key = jdb.read_key();
         const index = all_key.indexOf(props.id);
 
@@ -34,6 +36,7 @@ class MainPage extends React.Component{
 
             tab: left_list[0],
             leftExpand: false,
+			isSearch: false,
 
 			next_key: index===all_key.length-1?'':all_key[index+1],
             previous_key: index===0?'':all_key[index-1],
@@ -45,6 +48,42 @@ class MainPage extends React.Component{
     setLeftExpand(){ this.setState({ leftExpand: !this.state.leftExpand }); }
     forceUpdate(){ this.setState({}); }
 	setImgPath(new_img_path){ this.setState({ img_path: new_img_path }) }
+	setIsSearch(value){ this.setState({ isSearch: value }) }
+
+    render(){
+		return (<>
+			<SearchPanel 
+				schema={sdb.get_schema()}
+				display={this.state.isSearch}
+				onClose={()=>{this.setIsSearch(false)}}/>
+
+			<div id='mainpage-container'>
+				<Topbar 
+				key_ratio={`${this.index+1}/${this.all_key.length}`}
+				isAtStart={this.state.previous_key===''}
+				isAtEnd={this.state.next_key===''}
+
+				onSearch={()=>{this.setIsSearch(true)}}
+				onNew={()=>{this.NewData()}}
+				onNext={()=>{this.NextData()}}
+				onPrevious={()=>{this.PreviousData()}}
+				onDelete={()=>{this.DeleteData()}}
+				
+				onFirst={()=>{this.ToFirst()}}
+				onLast={()=>{this.ToLast()}} />
+
+				<div id='body-container'>
+					{this.LeftContainer()}
+					{this.RightContainer()}
+				</div>
+
+				<i className='fi fi-rr-key icon' 
+				id='show-key-icon'>            
+					<p id='hash_id-text'>{this.id}</p>
+				</i>
+			</div>
+		</>);
+    }
 
     SaveData(){
         // const id = this.id;
@@ -245,32 +284,6 @@ class MainPage extends React.Component{
     ToLast(){
         const key = this.all_key[this.all_key.length-1];
         this.props.history.push(`/redirect_to_edit/${key}`);
-    }
-    render(){
-        return (<div id='mainpage-container'>
-            <Topbar 
-            key_ratio={`${this.index+1}/${this.all_key.length}`}
-            isAtStart={this.state.previous_key===''}
-            isAtEnd={this.state.next_key===''}
-
-            onNew={()=>{this.NewData()}}
-            onNext={()=>{this.NextData()}}
-            onPrevious={()=>{this.PreviousData()}}
-            onDelete={()=>{this.DeleteData()}}
-            
-            onFirst={()=>{this.ToFirst()}}
-            onLast={()=>{this.ToLast()}} />
-
-            <div id='body-container'>
-                {this.LeftContainer()}
-                {this.RightContainer()}
-            </div>
-
-            <i className='fi fi-rr-key icon' 
-            id='show-key-icon'>            
-                <p id='hash_id-text'>{this.id}</p>
-            </i>
-        </div>);
     }
 
 }

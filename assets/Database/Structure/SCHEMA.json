@@ -1,15 +1,23 @@
 {
-    "ប្រវត្តិរូបសង្ខេប": {
-        "firstName": "",
-        "lastName": "", 
-        "age": "",
-        "sex": "",
-        "date of birth": "",
-        "test select": ""
-    },
-    "test": [{
-        "Key1": "",
-        "Key2": "",
-        "Key3": ""
-    }]
+  "ប្រវត្តិរូបសង្ខេប": {
+    "firstName": "",
+    "lastName": "",
+    "age": "",
+    "sex": "",
+    "date of birth": "",
+    "test select": ""
+  },
+  "test": [
+    {
+      "Key1": "",
+      "Key2": "",
+      "Key3": ""
+    }
+  ],
+  "test2": {
+    "Key1": "",
+    "Key2": "",
+    "Key3": ""
+  }
 }
+
