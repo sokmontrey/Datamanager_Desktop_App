@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import { withRouter } from "react-router";
 
 import { Data_Controller } from "../Controllers/DataController.js";
@@ -16,30 +16,29 @@ class MainPage extends React.Component{
     constructor(props){
         super(props);
 
+        dc.clean_data();
+
         const left_list = dc.get_left_list();
         
         const all_key = jdb.read_key();
         const index = all_key.indexOf(props.id);
 
+        this.id = props.id;
+        this.left_list = left_list;
+        this.all_key = all_key;
+        this.index = index;
+
         this.state = {
-            id: props.id,
             data: jdb.read_json(props.id),
 			img_path: jdb.read_img(props.id) || '',
 
-            left_list: left_list,
             tab: left_list[0],
             leftExpand: false,
 
-            all_key: all_key,
-            index: index,
 			next_key: index===all_key.length-1?'':all_key[index+1],
             previous_key: index===0?'':all_key[index-1],
         }
     }
-
-    // componentDidMount(){
-    //     dc.clean_data();//TODO also here
-    // }
 
     setTab (tab) { this.setState({ tab: tab }); }
     setData (new_data) { this.setState({ data: new_data }); }
@@ -48,9 +47,9 @@ class MainPage extends React.Component{
 	setImgPath(new_img_path){ this.setState({ img_path: new_img_path }) }
 
     SaveData(){
-        // const id = this.state.id;
+        // const id = this.id;
         // const data = this.state.data;
-        jdb.update(this.state.id, this.state.data, '');
+        jdb.update(this.id, this.state.data, '');
     }
     OnInputChange(value, key, index){
         const new_data = this.state.data;
@@ -82,10 +81,10 @@ class MainPage extends React.Component{
         this.SaveData();
     }
     LeftContainer(){
-        // const left_list = this.state.left_list;
+        // const left_list = this.left_list;
         // const tab = this.state.tab;
 
-        const LeftButtonList = this.state.left_list.map((key, index)=>
+        const LeftButtonList = this.left_list.map((key, index)=>
             <button 
             key = {`${key}-${index}`}
             className = {`${key===this.state.tab?'selected-tab':''} button3 khmer`}
@@ -105,7 +104,7 @@ class MainPage extends React.Component{
 			onChange={(e)=>{
 				const file = e.target.files[0];
 				const img_path = file.path;
-				jdb.write_img(this.state.id, img_path);
+				jdb.write_img(this.id, img_path);
 				this.setImgPath(img_path);
 			}}/>
 
@@ -231,24 +230,24 @@ class MainPage extends React.Component{
     }
     DeleteData(){
         if(confirm('Are you sure you want to delete this data?')){
-            // const id = this.state.id;   
-            if(jdb.delete(this.state.id)){
+            // const id = this.id;   
+            if(jdb.delete(this.id)){
                 this.props.history.push('/to_first_data');
             }
         }
     }
     ToFirst(){
-        const key = this.state.all_key[0];
+        const key = this.all_key[0];
         this.props.history.push(`/redirect_to_edit/${key}`);
     }
     ToLast(){
-        const key = this.state.all_key[this.state.all_key.length-1];
+        const key = this.all_key[this.all_key.length-1];
         this.props.history.push(`/redirect_to_edit/${key}`);
     }
     render(){
         return (<div id='mainpage-container'>
             <Topbar 
-            key_ratio={`${this.state.index+1}/${this.state.all_key.length}`}
+            key_ratio={`${this.index+1}/${this.all_key.length}`}
             isAtStart={this.state.previous_key===''}
             isAtEnd={this.state.next_key===''}
 
@@ -267,7 +266,7 @@ class MainPage extends React.Component{
 
             <i className='fi fi-rr-key icon' 
             id='show-key-icon'>            
-                <p id='hash_id-text'>{this.state.id}</p>
+                <p id='hash_id-text'>{this.id}</p>
             </i>
         </div>);
     }

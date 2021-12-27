@@ -173,8 +173,8 @@ export class JSON_DB{
     }
 
     update(id, data, img_path){
-        this.update_json(id, data);
-        this.update_img(id, img_path);
+        return this.update_json(id, data)
+        && this.update_img(id, img_path);
     }
 
     update_json(id, data){
