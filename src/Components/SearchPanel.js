@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import search_for_data, { get_search_highlight_list } from '../Controllers/SearchController.js';
+
+import { JSON_DB } from '../Controllers/DatabaseController.js';
+const jdb = new JSON_DB();
 
 export function SearchPanel(props) {
 	if(props.display){
 		const [result_list , setResultList] = useState([]);
+		const [allInput, setAllInput] = useState(['','','']);
+
+		const [, updateState] = useState();
+		const forceUpdate = useCallback(() => updateState({}), []);
 
 		return ( <div 
 			id='search-panel-outside-container'>
@@ -12,6 +19,7 @@ export function SearchPanel(props) {
 			<div id='search-panel-container'>
 				<SearchTopbar 
 					onSearchChange={(key1, key2, value)=>{
+						setAllInput([key1, key2, value]);
 						setResultList(
 							search_for_data(key1, key2, value)
 						);
@@ -19,6 +27,18 @@ export function SearchPanel(props) {
 					{...props} />
 
 				<SearchBody 
+					onDelete={(key)=>{
+						const conf = confirm("Are you sure you want to delete this data?");
+						if(conf && key){
+							if(jdb.delete(key)){ 
+								const [key1, key2, value] = allInput;
+								setResultList(
+									search_for_data(key1, key2, value)
+								);
+								forceUpdate();
+							}
+						}
+					}}
 					{...props} 
 					result_list={result_list} />
 			</div>
@@ -112,7 +132,9 @@ const SearchBody = (props)=>{
 				{HighlightEle}
 			</div>
 
-			<button className='button3'>
+			<button 
+				className='button3'
+				onClick={(e)=>{props.onDelete(e.target.value)}}>
 				<i className='fi fi-rr-trash icon'
 					style={{color: 'red'}}/>
 			</button>
