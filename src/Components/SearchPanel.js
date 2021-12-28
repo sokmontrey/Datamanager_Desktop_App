@@ -1,4 +1,5 @@
-import React, { useState, useHistory, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import search_for_data, { get_search_highlight_list } from '../Controllers/SearchController.js';
 
 export function SearchPanel(props) {
@@ -81,6 +82,8 @@ const SearchTopbar = (props)=>{
 }
 
 const SearchBody = (props)=>{
+	const history = useHistory();
+
 	const result_list = props.result_list;
 	const ResultListEle = result_list.map((key, index)=>{
 		const highlight_list = get_search_highlight_list(key);
@@ -89,10 +92,15 @@ const SearchBody = (props)=>{
 				{ele}
 			</p>
 		);
-		return ( <div className='search-result-list-container' key={index}> 
-			<p>{index+1}</p>
+		return ( <div 
+			className='search-result-list-container' 
+			key={index}> 
 
-			<div className='search-highlight-container'>
+			<p style={{fontFamily: 'var(--secondary-font)'}}>{index+1}</p>
+
+			<div 
+				onClick={()=>{history.push(`/redirect_to_edit/${key}`)}}
+				className='search-highlight-container khmer'>
 				{HighlightEle}
 			</div>
 
