@@ -5,6 +5,7 @@ import search_for_data, { get_search_highlight_list } from '../Controllers/Searc
 export function SearchPanel(props) {
 	if(props.display){
 		const [result_list , setResultList] = useState([]);
+
 		return ( <div 
 			id='search-panel-outside-container'>
 
@@ -92,13 +93,20 @@ const SearchBody = (props)=>{
 				{ele}
 			</p>
 		);
+		const NOHE = highlight_list.length;
 		return ( <div 
 			className='search-result-list-container' 
 			key={index}> 
 
-			<p style={{fontFamily: 'var(--secondary-font)'}}>{index+1}</p>
+			<p 
+				className='result-index-text'
+				style={{fontFamily: 'var(--secondary-font)'}}>{index+1}</p>
 
 			<div 
+				style={{ 
+					gridTemplateColumns: 
+					`repeat(${NOHE}, ${100/NOHE}%)` 
+				}}
 				onClick={()=>{history.push(`/redirect_to_edit/${key}`)}}
 				className='search-highlight-container khmer'>
 				{HighlightEle}

@@ -28,7 +28,6 @@ export default function App(){
                             all_key = jdb.read_key();
                         }
                         const first_key = all_key[0];
-
                         return <Redirect to={`/redirect_to_edit/${first_key}`} />
                     }}
                 </Route>
