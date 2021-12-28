@@ -29,11 +29,6 @@
 
   padding: calc(var(--small-padding));
 }
-#search-input {
-  flex: 1;
-  margin: 0 calc(var(--small-padding) * 2);
-  font-family: var(--primary-font);
-}
 #search-topbar-container button {
   padding: 0;
   padding-right: var(--small-padding);
@@ -48,4 +43,9 @@
 #key2-container {
   overflow: hidden;
   display: flex;
+}
+.search-input {
+  flex: 1;
+  margin: 0 calc(var(--small-padding) * 2);
+  font-family: var(--primary-font);
 }

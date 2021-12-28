@@ -59,6 +59,20 @@ export class Structure_DB{
             return type;
         }catch(e){ return false; }
     }
+	get_highlight(){
+		//highlight_structure: {
+		//	"Tab": ["key1", "key2", "key3"]
+		//}
+		try{
+			const highlight = JSON.parse(
+				fs.readFileSync(
+					path.join(database_path,
+					'database/structure/HIGHLIGHT.json')
+				)
+			);
+			return highlight;
+		}catch(e){ return false; }
+	}
     write_type(new_type){
         try{
             fs.writeFileSync(

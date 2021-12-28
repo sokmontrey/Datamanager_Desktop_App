@@ -1,13 +1,24 @@
 import React, { useState, useHistory, useEffect } from 'react';
+import search_for_data, { get_search_highlight_list } from '../Controllers/SearchController.js';
 
 export function SearchPanel(props) {
 	if(props.display){
+		const [result_list , setResultList] = useState([]);
 		return ( <div 
 			id='search-panel-outside-container'>
 
 			<div id='search-panel-container'>
-				<SearchTopbar {...props} />
-				<SearchBody />
+				<SearchTopbar 
+					onSearchChange={(key1, key2, value)=>{
+						setResultList(
+							search_for_data(key1, key2, value)
+						);
+					}}
+					{...props} />
+
+				<SearchBody 
+					{...props} 
+					result_list={result_list} />
 			</div>
 		</div> );
 	}else return '';
@@ -61,14 +72,38 @@ const SearchTopbar = (props)=>{
 		</select>
 
 		<input 
+			onChange={(e)=>{
+				props.onSearchChange(key1, key2, e.target.value);
+			}}
 			className='khmer search-input' 
 			placeholder='Search for data...'/>
 	</div>);
 }
 
 const SearchBody = (props)=>{
+	const result_list = props.result_list;
+	const ResultListEle = result_list.map((key, index)=>{
+		const highlight_list = get_search_highlight_list(key);
+		const HighlightEle = highlight_list.map((ele, sub_index)=>
+			<p key={sub_index} className='search-highlight-text'>
+				{ele}
+			</p>
+		);
+		return ( <div className='search-result-list-container' key={index}> 
+			<p>{index+1}</p>
+
+			<div className='search-highlight-container'>
+				{HighlightEle}
+			</div>
+
+			<button className='button3'>
+				<i className='fi fi-rr-trash icon'
+					style={{color: 'red'}}/>
+			</button>
+		</div> )
+	});
 	return (<div id='search-body-container'>
-		
+		{ResultListEle}
 	</div>)
 }
 

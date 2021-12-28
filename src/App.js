@@ -34,13 +34,6 @@ export default function App(){
                 </Route>
 
                 <Route exact path='/to_first_data'>
-                    {/* {()=>{
-                        const all_key = jdb.read_key();
-                        !all_key.length ? create_empty() : null;
-                        const first_key = all_key[0];
-                        
-                        return <Redirect to={`/edit/${first_key}`} />
-                    }} */}
                     <Redirect to="/" />
                 </Route>
                 
