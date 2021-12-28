@@ -1,3 +1,5 @@
+const math = " function NOW(){ const result = new Date(); const day = result.getDate(); const month = result.getMonth() + 1; const year = result.getFullYear(); return day + '-' + month + '-' + year; } function  YEAR(date){ if(date.split('-').length === 3){ return date.split('-')[2]; }else if(date.split('/').length === 3){ return date.split('/')[2]; } } function  MONTH(date){ if(date.split('-').length === 3){ return date.split('-')[1]; }else if(date.split('/').length === 3){ return date.split('/')[1]; } } function  DAY(date){ if(date.split('-').length === 3){ return date.split('-')[0]; }else if(date.split('/').length === 3){ return date.split('/')[0]; } } function INT(string){ return parseInt(string); } function STR(int){ return int.toString(); }"; 
+
 class math_function{
     NOW(){ 
         const result = new Date();
@@ -33,15 +35,10 @@ class math_function{
 export function apply_math(data, tab, index, formula){
     // formula is String
     try{
-        const f = new math_function();
         const splited_variable = split_variable(formula);
         const replaced = find_variable(splited_variable, data, tab, index).join('');
-        const result = eval(replaced);
-        // var result = '';
-        // for(let i in replaced){
-        //     if(!(i % 2)) result += eval(replaced[i])? eval(replaced[i]) : '';
-        //     else result += replaced[i];
-        // }
+		const string = math + replaced;
+		const result = eval(string);
         return [result, true];
     } catch (e) { return [e.message, false] }
 }
