@@ -29,12 +29,8 @@ export default function App(){
                         }
                         const first_key = all_key[0];
 
-                        return <Redirect to={`/edit/${first_key}`} />
+                        return <Redirect to={`/redirect_to_edit/${first_key}`} />
                     }}
-                </Route>
-
-                <Route exact path='/to_first_data'>
-                    <Redirect to="/" />
                 </Route>
                 
                 <Route path='/redirect_to_edit/:id'

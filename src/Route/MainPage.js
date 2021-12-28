@@ -270,12 +270,12 @@ class MainPage extends React.Component{
         }
     }
     DeleteData(){
-        if(confirm('Are you sure you want to delete this data?')){
-            // const id = this.id;   
-            if(jdb.delete(this.id)){
-                this.props.history.push('/to_first_data');
-            }
-        }
+		const conf = confirm("Are you sure you want to delete this data?");
+        if(conf){
+			if(jdb.delete(this.id)){
+				this.props.history.push('/'); //TODO maybe change later
+			}
+		}
     }
     ToFirst(){
         const key = this.all_key[0];
