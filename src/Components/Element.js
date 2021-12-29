@@ -113,9 +113,13 @@ export function Topbar(props){
 
     return (<div id='topbar-container'>
         <div id='topleft'>
+			<button className='button2 down-button'
+			onClick={props.onSaveXlsx}>
+				<i className='fi fi-rr-arrow-small-down icon' />
+			</button>
+
             <button className='button2'
             onClick={props.onSearch}>
-                <i className="fi fi-rr-search icon" />
                 Search
             </button>
         </div>

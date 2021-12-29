@@ -9,7 +9,7 @@ export class Data_Controller{
     constructor(){}
         
     create_xlsx(){
-        clean_data();
+        this.clean_data();
         return jdb.create_all_xlsx(sdb.get_schema());
     }
 

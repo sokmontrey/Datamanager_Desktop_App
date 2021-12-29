@@ -134,7 +134,7 @@ const SearchBody = (props)=>{
 
 			<button 
 				className='button3'
-				onClick={(e)=>{props.onDelete(e.target.value)}}>
+				onClick={()=>{props.onDelete(key)}}>
 				<i className='fi fi-rr-trash icon'
 					style={{color: 'red'}}/>
 			</button>

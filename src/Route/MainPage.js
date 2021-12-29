@@ -63,6 +63,7 @@ class MainPage extends React.Component{
 				isAtStart={this.state.previous_key===''}
 				isAtEnd={this.state.next_key===''}
 
+				onSaveXlsx={()=>{this.SaveXlsx()}}
 				onSearch={()=>{this.setIsSearch(true)}}
 				onNew={()=>{this.NewData()}}
 				onNext={()=>{this.NextData()}}
@@ -85,9 +86,14 @@ class MainPage extends React.Component{
 		</>);
     }
 
+	SaveXlsx(){ 
+		const name = dc.create_xlsx()
+		if(name){
+			alert(`created ${name}`);
+		}
+	}
+
     SaveData(){
-        // const id = this.id;
-        // const data = this.state.data;
         jdb.update(this.id, this.state.data, '');
     }
     OnInputChange(value, key, index){
