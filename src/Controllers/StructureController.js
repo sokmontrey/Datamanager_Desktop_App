@@ -44,6 +44,18 @@ export class Structure_DB{
             return formula;
         }catch(e){ return false; }
     }
+	get_math(){
+		try{
+			const math = new String(
+				fs.readFileSync(
+					path.join(database_path,
+					'database/structure/MATH.js')
+				)
+			);
+			if (math) return math;
+			else return '';
+		}catch (e) { return false; }
+	}
     get_type(){
         // type_structure: {
         //     "Tab1": {

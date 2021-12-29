@@ -1,38 +1,4 @@
-const math = " function NOW(){ const result = new Date(); const day = result.getDate(); const month = result.getMonth() + 1; const year = result.getFullYear(); return day + '-' + month + '-' + year; } function  YEAR(date){ if(date.split('-').length === 3){ return date.split('-')[2]; }else if(date.split('/').length === 3){ return date.split('/')[2]; } } function  MONTH(date){ if(date.split('-').length === 3){ return date.split('-')[1]; }else if(date.split('/').length === 3){ return date.split('/')[1]; } } function  DAY(date){ if(date.split('-').length === 3){ return date.split('-')[0]; }else if(date.split('/').length === 3){ return date.split('/')[0]; } } function INT(string){ return parseInt(string); } function STR(int){ return int.toString(); }"; 
-
-class math_function{
-    NOW(){ 
-        const result = new Date();
-        const day = result.getDate();
-        const month = result.getMonth() + 1;
-        const year = result.getFullYear();
-        return `${day}-${month}-${year}`;
-    }
-    YEAR(date){
-        if(date.split('-').length === 3){
-            return date.split('-')[2];
-        }else if(date.split('/').length === 3){
-            return date.split('/')[2];
-        }
-    }
-    MONTH(date){
-        if(date.split('-').length === 3){
-            return date.split('-')[1];
-        }else if(date.split('/').length === 3){
-            return date.split('/')[1];
-        }
-    }
-    DAY(date){
-        if(date.split('-').length === 3){
-            return date.split('-')[0];
-        }else if(date.split('/').length === 3){
-            return date.split('/')[0];
-        }
-    }
-    INT(string){ return parseInt(string); }
-    STR(int){ return int.toString(); }
-}
-export function apply_math(data, tab, index, formula){
+export function apply_math(data, tab, index, formula, math){
     // formula is String
     try{
         const splited_variable = split_variable(formula);

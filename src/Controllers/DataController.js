@@ -3,6 +3,7 @@ import { Structure_DB } from './StructureController.js';
 import { apply_math } from './MathController.js';
 const jdb = new JSON_DB();
 const sdb = new Structure_DB();
+const math = sdb.get_math();
 
 export class Data_Controller{
     constructor(){}
@@ -102,7 +103,7 @@ export class Data_Controller{
             for(let index in data[tab]){
                 for(let key in formula){
                     [new_data[tab][index][key],
-                    working] = apply_math(data, tab, index, formula[key]);
+                    working] = apply_math(data, tab, index, formula[key], math);
                 }
             }
         }else{
@@ -111,7 +112,7 @@ export class Data_Controller{
             // }
             for(let key in formula){
                 [new_data[tab][key],
-                working] = apply_math(data, tab, 0, formula[key]);
+                working] = apply_math(data, tab, 0, formula[key], math);
             }
         }
         return [new_data, working];
