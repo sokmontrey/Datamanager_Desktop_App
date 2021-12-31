@@ -155,7 +155,7 @@ export function Topbar(props){
             </button>
 
             <button className='button3 delete-button'
-            onClick={props.onDelete}>
+			onClick={props.onDelete}>
                 <i className="fi fi-rr-trash icon" />
             </button>
         </div>

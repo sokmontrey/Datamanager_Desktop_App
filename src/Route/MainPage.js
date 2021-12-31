@@ -282,6 +282,7 @@ class MainPage extends React.Component{
 				this.props.history.push('/'); //TODO maybe change later
 			}
 		}
+		return 0;
     }
     ToFirst(){
         const key = this.all_key[0];
