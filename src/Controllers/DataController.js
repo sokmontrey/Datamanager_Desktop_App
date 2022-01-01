@@ -33,38 +33,63 @@ export class Data_Controller{
     clean_data(){//TODO handle this better
         const all_key = jdb.read_key();
         const schema = sdb.get_schema();
-        for(let index=0; index<all_key.length; index++){
-            const data = jdb.read_json(all_key[index]);
-            for(let tab in schema){ //add data if it doesn't exist
-                if(data[tab]===undefined) data[tab] = schema[tab];
+		const schema_tab = Object.keys(schema);
 
-                if(Array.isArray(data[tab]) && Array.isArray(schema[tab])){
-                    for(let i=0; i<data[tab].length; i++){
-                        for(let key in schema[tab][0]){
-                            if(data[tab][i][key]===undefined) data[tab][i][key] = schema[tab][0][key];
-                        }
-                    }
-                }else if(!Array.isArray(data[tab]) && !Array.isArray(schema[tab])){
-                    for(let key in schema[tab]){
-                        if(data[tab][key]===undefined) data[tab][key] = schema[tab][key]
-                    }
-                }
-            }
+		for(let index=0; index<all_key.length; index++){
+			const data = jdb.read_json(all_key[index]);
 
-            for(let tab in data){ //remove data if it doesn't exist in schema
-                if(schema[tab]===undefined) delete data[tab];
-                if(Array.isArray(data[tab])){
-                    for(let key in data[tab][0])
-                        if(schema[tab][0][key]===undefined)
-                            for(let i=0; i<data[tab].length; i++)
-                                delete data[tab][i][key];
-                }else{
-                    for(let key in data[tab])
-                        if(schema[tab][key]===undefined) delete data[tab][key];
-                }
-            }
-            jdb.update(all_key[index], data);
-        }
+			const data_tab = Object.keys(data);
+			for(let tab in data){
+				if(!schema_tab.includes(tab)){
+					delete data[tab];
+				}
+			}
+			for(let tab in schema){
+				if(!data_tab.includes(tab)){
+					data[tab] = schema[tab];
+				}else{
+					if(Array.isArray(schema[tab]) && !Array.isArray(data[tab])){
+						delete data[tab];
+						data[tab] = schema[tab][0];
+					} else if(!Array.isArray(schema[tab]) && Array.isArray(data[tab])){
+						delete data[tab];
+						data[tab] = schema[tab];
+					} else if(Array.isArray(schema[tab]) && Array.isArray(data[tab])){
+						//both are arrays just need to check index
+						const schema_key = Object.keys(schema[tab][0]);
+						const data_key = Object.keys(data[tab][0]);
+
+						for(let key of data_key){
+							if(!schema_key.includes(key)){
+								for(let index=0; index<data[tab].length; index++)
+									delete data[tab][0][key];
+							}
+						}
+						for(let key of schema_key){
+							if(!data_key.includes(key)){
+								for(let index=0; index<data[tab].length; index++)
+									data[tab][index][key] = schema[tab][0][key];
+							}
+						}
+					} else {
+						const schema_key = Object.keys(schema[tab]);
+						const data_key = Object.keys(data[tab]);
+
+						for(let key of data_key){
+							if(!schema_key.includes(key)){
+								delete data[tab][key];
+							}
+						}
+						for(let key of schema_key){
+							if(!data_key.includes(key)){
+								data[tab][key] = schema[tab][key];
+							}
+						}
+					}//end of key check
+				}
+			}//end of tab check
+			jdb.update_json(all_key[index], data);
+		}
     }
 
     get_left_list(){
