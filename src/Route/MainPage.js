@@ -20,7 +20,6 @@ class MainPage extends React.Component{
     constructor(props){
         super(props);
 
-        dc.clean_data();
         const left_list = dc.get_left_list();
         const all_key = jdb.read_key();
         const index = all_key.indexOf(props.id);

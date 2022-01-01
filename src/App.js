@@ -16,6 +16,7 @@ const dc = new Data_Controller();
 
 export default function App(){
 
+	dc.clean_data();
     return (
         <Router>
             <Switch>
