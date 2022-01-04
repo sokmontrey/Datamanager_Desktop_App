@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 export function ConfirmDialog(message, onYes, onNo){
-	return ( <div id='confirm-cotainer'>
-		<div id='confirm-dialog'>
+	return ( <div className='dialog-wrapper'>
+		<div className='dialog-container'>
 			<p className='dialog-text'>{message}</p>
-			<button className='button3'
+			<button className='button2'
 				onClick={()=>onYes()}>Yes</button>
-			<button className='button3'
+			<button className='button2'
 				onClick={()=>onNo()}>No</button>
 		</div>
 	</div> )

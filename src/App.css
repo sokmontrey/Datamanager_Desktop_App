@@ -8,6 +8,7 @@
 @import "./Styles/MainPage.css";
 @import "./Styles/Icons/icon.css";
 @import "./Styles/SearchPanel.css";
+@import "./Styles/Dialog.css";
 
 :root {
   --background-color: white;

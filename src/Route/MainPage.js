@@ -77,7 +77,7 @@ class MainPage extends React.Component{
 				onPrevious={()=>{this.PreviousData()}}
 				onDelete={()=>{
 					this.setState({
-						showDeleteConfirm: [true, 'Delete this data?']
+						showDeleteConfirm: [true, 'Are you sure you want to delete this data?']
 					})
 				}}
 				
