@@ -6,6 +6,7 @@ release-builds/
 #################################
 .tmp/
 node_modules/
+assets/Database/XLSX/
 *.compiled.*
 
 # Folder config file #
