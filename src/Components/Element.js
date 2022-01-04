@@ -11,10 +11,12 @@ export function ConfirmDialog(message, onYes, onNo){
 		</div>
 	</div> )
 }
-export function AlertDialog(message){
+export function AlertDialog(message, onClose){
 	return ( <div className='dialog-wrapper'>
 		<div className='dialog-container'>
 			<p className='dialog-text'>{message}</p>
+			<button className='button2' 
+				onClick={()=>onClose()}>Close</button>
 		</div>
 	</div> );
 }
