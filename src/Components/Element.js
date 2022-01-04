@@ -11,6 +11,13 @@ export function ConfirmDialog(message, onYes, onNo){
 		</div>
 	</div> )
 }
+export function AlertDialog(message){
+	return ( <div className='dialog-wrapper'>
+		<div className='dialog-container'>
+			<p className='dialog-text'>{message}</p>
+		</div>
+	</div> );
+}
 
 export function CreateInputElement(props){
     const [value, setValue] = useState(props.value);
