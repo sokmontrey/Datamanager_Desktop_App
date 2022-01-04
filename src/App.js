@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     HashRouter as Router,
     Route,
@@ -15,9 +15,8 @@ const jdb = new JSON_DB();
 const dc = new Data_Controller();
 
 export default function App(){
-
 	dc.clean_data();
-    return (
+	return (
         <Router>
             <Switch>
 
@@ -45,5 +44,5 @@ export default function App(){
 
             </Switch>
         </Router>
-    );
+	);
 }

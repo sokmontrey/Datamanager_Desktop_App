@@ -5,6 +5,8 @@ import search_for_data, { get_search_highlight_list } from '../Controllers/Searc
 import { JSON_DB } from '../Controllers/DatabaseController.js';
 const jdb = new JSON_DB();
 
+import {ConfirmDialog} from './Element.js';
+
 export function SearchPanel(props) {
 	if(props.display){
 		const [result_list , setResultList] = useState([]);
@@ -13,36 +15,41 @@ export function SearchPanel(props) {
 		const [, updateState] = useState();
 		const forceUpdate = useCallback(() => updateState({}), []);
 
-		return ( <div 
-			id='search-panel-outside-container'>
+		//set to true to show confirm dialog, and follow by message and delete key
+		const [showConfirm, setShowConfirm] = useState([false, null,null]);
 
-			<div id='search-panel-container'>
-				<SearchTopbar 
-					onSearchChange={(key1, key2, value)=>{
-						setAllInput([key1, key2, value]);
-						setResultList(
-							search_for_data(key1, key2, value)
-						);
-					}}
-					{...props} />
+		function DeleteData(){
+			console.log("delet");
+			console.log(showConfirm[2]);
+		}
 
-				<SearchBody 
-					onDelete={(key)=>{
-						const conf = confirm("Are you sure you want to delete this data?");
-						if(conf && key){
-							if(jdb.delete(key)){ 
-								const [key1, key2, value] = allInput;
-								setResultList(
-									search_for_data(key1, key2, value)
-								);
-								forceUpdate();
-							}
-						}
-					}}
-					{...props} 
-					result_list={result_list} />
-			</div>
-		</div> );
+		return ( <>
+			{showConfirm[0]? 
+				ConfirmDialog(
+				showConfirm[1],
+				()=>DeleteData(), 
+				()=>setShowConfirm([false,null, null])): ''}
+
+			<div id='search-panel-outside-container'>
+				<div id='search-panel-container'>
+					<SearchTopbar 
+						onSearchChange={(key1, key2, value)=>{
+							setAllInput([key1, key2, value]);
+							setResultList(
+								search_for_data(key1, key2, value)
+							);
+						}}
+						{...props} />
+
+					<SearchBody 
+						onDelete={(key)=>{
+							setShowConfirm([true, "Are you sure you want to delete data?", key])
+						}}
+						{...props} 
+						result_list={result_list} />
+				</div>
+			</div> 
+		</>);
 	}else return '';
 }
 

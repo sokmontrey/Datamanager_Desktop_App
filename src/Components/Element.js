@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
+export function ConfirmDialog(message, onYes, onNo){
+	return ( <div id='confirm-cotainer'>
+		<div id='confirm-dialog'>
+			<p className='dialog-text'>{message}</p>
+			<button className='button3'
+				onClick={()=>onYes()}>Yes</button>
+			<button className='button3'
+				onClick={()=>onNo()}>No</button>
+		</div>
+	</div> )
+}
+
 export function CreateInputElement(props){
     const [value, setValue] = useState(props.value);
     const type = props.type;

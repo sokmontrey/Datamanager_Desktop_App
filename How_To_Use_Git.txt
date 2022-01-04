@@ -1,3 +1,4 @@
+testing
 git init: to init
 git add .: to add all file
 git commit -m 'command': to commit, and -m to add message
