@@ -15,6 +15,7 @@ import {
 } from "../Components/Element.js";
 
 import { SearchPanel } from "../Components/SearchPanel.js";
+import { ConfirmDialog } from "../Components/Element.js";
 
 class MainPage extends React.Component{
     constructor(props){
@@ -30,6 +31,7 @@ class MainPage extends React.Component{
         this.index = index;
 
         this.state = {
+			showDeleteConfirm: [false, null],
             data: jdb.read_json(props.id),
 			img_path: jdb.read_img(props.id) || '',
 
@@ -51,6 +53,12 @@ class MainPage extends React.Component{
 
     render(){
 		return (<>
+			{this.state.showDeleteConfirm[0]?
+				ConfirmDialog(this.state.showDeleteConfirm[1],
+				()=>this.DeleteData(), 
+				()=>this.setState({showDeleteConfirm: [false, null]}) )
+			:''}
+
 			<SearchPanel 
 				schema={sdb.get_schema()}
 				display={this.state.isSearch}
@@ -67,7 +75,11 @@ class MainPage extends React.Component{
 				onNew={()=>{this.NewData()}}
 				onNext={()=>{this.NextData()}}
 				onPrevious={()=>{this.PreviousData()}}
-				onDelete={()=>{this.DeleteData()}}
+				onDelete={()=>{
+					this.setState({
+						showDeleteConfirm: [true, 'Delete this data?']
+					})
+				}}
 				
 				onFirst={()=>{this.ToFirst()}}
 				onLast={()=>{this.ToLast()}} />
@@ -275,13 +287,9 @@ class MainPage extends React.Component{
         }
     }
     DeleteData(){
-		const conf = confirm("Are you sure you want to delete this data?");
-        if(conf){
-			if(jdb.delete(this.id)){
-				this.props.history.push('/'); //TODO maybe change later
-			}
+		if(jdb.delete(this.id)){
+			this.props.history.push('/'); //TODO maybe change later
 		}
-		return 0;
     }
     ToFirst(){
         const key = this.all_key[0];

@@ -16,19 +16,23 @@ export function SearchPanel(props) {
 		const forceUpdate = useCallback(() => updateState({}), []);
 
 		//set to true to show confirm dialog, and follow by message and delete key
-		const [showConfirm, setShowConfirm] = useState([false, null,null]);
+		const [deleteConfirm, setDeleteConfirm] = useState([false, null,null]);
 
 		function DeleteData(){
-			console.log("delet");
-			console.log(showConfirm[2]);
+			jdb.delete(deleteConfirm[2]);
+			setResultList(
+				search_for_data(allInput[0], allInput[1], allInput[2])
+			);
+			setDeleteConfirm([false, null, null]);
+			forceUpdate();
 		}
 
 		return ( <>
-			{showConfirm[0]? 
+			{deleteConfirm[0]? 
 				ConfirmDialog(
-				showConfirm[1],
+				deleteConfirm[1],
 				()=>DeleteData(), 
-				()=>setShowConfirm([false,null, null])): ''}
+				()=>setDeleteConfirm([false,null, null])): ''}
 
 			<div id='search-panel-outside-container'>
 				<div id='search-panel-container'>
@@ -43,7 +47,7 @@ export function SearchPanel(props) {
 
 					<SearchBody 
 						onDelete={(key)=>{
-							setShowConfirm([true, "Are you sure you want to delete data?", key])
+							setDeleteConfirm([true, "Are you sure you want to delete data?", key])
 						}}
 						{...props} 
 						result_list={result_list} />
