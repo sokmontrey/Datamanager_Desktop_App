@@ -15,7 +15,7 @@ import {
 } from "../Components/Element.js";
 
 import { SearchPanel } from "../Components/SearchPanel.js";
-import { ConfirmDialog } from "../Components/Element.js";
+import { ConfirmDialog, AlertDialog } from "../Components/Element.js";
 
 class MainPage extends React.Component{
     constructor(props){
@@ -31,6 +31,7 @@ class MainPage extends React.Component{
         this.index = index;
 
         this.state = {
+			showAlertDialog: [false, null],
 			showDeleteConfirm: [false, null],
             data: jdb.read_json(props.id),
 			img_path: jdb.read_img(props.id) || '',
@@ -58,6 +59,11 @@ class MainPage extends React.Component{
 				()=>this.DeleteData(), 
 				()=>this.setState({showDeleteConfirm: [false, null]}) )
 			:''}
+
+			{this.sate.showAlertDialog[0] ?
+				AlertDialog(this.state.showAlertDialog[1],
+				()=>this.setState({showAlertDialog: [false, null]}))
+			: ''}
 
 			<SearchPanel 
 				schema={sdb.get_schema()}
@@ -100,7 +106,9 @@ class MainPage extends React.Component{
 	SaveXlsx(){ 
 		const name = dc.create_xlsx()
 		if(name){
-			alert(`created ${name}`);
+			this.setState({
+				showAlertDialog: [true, `created xlsx named: ${name}`]
+			})
 		}
 	}
 
