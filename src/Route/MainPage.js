@@ -60,7 +60,7 @@ class MainPage extends React.Component{
 				()=>this.setState({showDeleteConfirm: [false, null]}) )
 			:''}
 
-			{this.sate.showAlertDialog[0] ?
+			{this.state.showAlertDialog[0] ?
 				AlertDialog(this.state.showAlertDialog[1],
 				()=>this.setState({showAlertDialog: [false, null]}))
 			: ''}
@@ -107,7 +107,7 @@ class MainPage extends React.Component{
 		const name = dc.create_xlsx()
 		if(name){
 			this.setState({
-				showAlertDialog: [true, `created xlsx named: ${name}`]
+				showAlertDialog: [true, `created: ${name}`]
 			})
 		}
 	}
