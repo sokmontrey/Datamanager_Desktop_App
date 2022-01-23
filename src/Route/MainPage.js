@@ -32,7 +32,7 @@ class MainPage extends React.Component{
 
         this.state = {
 			showAlertDialog: [false, null],
-			showDeleteConfirm: [false, null],
+			showDeleteConfirm: [false, null, null],
             data: jdb.read_json(props.id),
 			img_path: jdb.read_img(props.id) || '',
 
@@ -57,12 +57,17 @@ class MainPage extends React.Component{
 			showAlertDialog: [true, message]
 		});
 	}
+	createConfirmDialog(message, callback){
+		this.setState({
+			showDeleteConfirm: [true, message, callback]
+		});
+	}
 
     render(){
 		return (<>
 			{this.state.showDeleteConfirm[0]?
 				ConfirmDialog(this.state.showDeleteConfirm[1],
-				()=>this.DeleteData(), 
+				this.state.showDeleteConfirm[2],
 				()=>this.setState({showDeleteConfirm: [false, null]}) )
 			:''}
 
@@ -88,8 +93,8 @@ class MainPage extends React.Component{
 				onNext={()=>{this.NextData()}}
 				onPrevious={()=>{this.PreviousData()}}
 				onDelete={()=>{
-					this.setState({
-						showDeleteConfirm: [true, 'Are you sure you want to delete this data?']
+					this.createConfirmDialog('Are you sure you want to delete this data?', ()=>{
+						this.DeleteData();
 					})
 				}}
 				
