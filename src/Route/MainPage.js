@@ -113,14 +113,12 @@ class MainPage extends React.Component{
 			</div>
 		</>);
     }
-
 	SaveXlsx(){ 
 		const name = dc.create_xlsx()
 		if(name){
 			this.createAlertDialog(`${name} has been created.`);
 		}
 	}
-
     SaveData(){
         jdb.update(this.id, this.state.data, '');
     }
@@ -284,7 +282,7 @@ class MainPage extends React.Component{
     }
     NewData(){
         const hash_id = dc.create_empty();
-        if(hash_id) {
+		if(hash_id){
             this.props.history.push( `/redirect_to_edit/${hash_id}` );
         }
         //TODO: create a better create handler 
@@ -316,7 +314,6 @@ class MainPage extends React.Component{
         const key = this.all_key[this.all_key.length-1];
         this.props.history.push(`/redirect_to_edit/${key}`);
     }
-
 }
 
 export default withRouter(MainPage);
