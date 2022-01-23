@@ -1,9 +1,5 @@
 {
   "ប្រវត្តិរូបសង្ខេប": {
-    "age": "YEAR(NOW()) - YEAR('[date of birth]') +' years'",
-"TestFormula":"YEAR('[date of birth]') + ' test'"
-  },
-  "test": {
-    "Key2": "YEAR(NOW()) - YEAR('[ប្រវត្តិរូបសង្ខេប:date of birth]') + 'test' "
+    "age": "YEAR(NOW()) - YEAR('[date of birth]') +' year'"
   }
 }

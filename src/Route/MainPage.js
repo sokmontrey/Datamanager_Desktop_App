@@ -124,7 +124,7 @@ class MainPage extends React.Component{
         else new_data[this.state.tab][key] = value;
 
         const [cal, working] = dc.use_formula(new_data, this.state.tab);
-        if(working) this.setData(cal)
+        if(working) this.setData(cal);
         else { this.setData(new_data); }
         this.SaveData();
     }

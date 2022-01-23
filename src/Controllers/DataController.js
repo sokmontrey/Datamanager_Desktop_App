@@ -127,10 +127,8 @@ export class Data_Controller{
             // }]
             for(let index in data[tab]){
                 for(let key in formula){
-					if(data[tab][index][key]){
-						[new_data[tab][index][key],
-						working] = apply_math(data, tab, index, formula[key], math);
-					}
+					[new_data[tab][index][key],
+					working] = apply_math(data, tab, index, formula[key], math);
                 }
             }
         }else{
@@ -139,10 +137,8 @@ export class Data_Controller{
             // }
             for(let key in formula){
 				//check if key is in data[tab]
-				if(data[tab][key]){
-					[new_data[tab][key],
-					working] = apply_math(data, tab, 0, formula[key], math);
-				}
+				[new_data[tab][key],
+				working] = apply_math(data, tab, 0, formula[key], math);
             }
         }
         return [new_data, working];
