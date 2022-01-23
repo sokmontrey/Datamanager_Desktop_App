@@ -52,6 +52,12 @@ class MainPage extends React.Component{
 	setImgPath(new_img_path){ this.setState({ img_path: new_img_path }) }
 	setIsSearch(value){ this.setState({ isSearch: value }) }
 
+	createAlertDialog(message){
+		this.setState({
+			showAlertDialog: [true, message]
+		});
+	}
+
     render(){
 		return (<>
 			{this.state.showDeleteConfirm[0]?
@@ -106,9 +112,7 @@ class MainPage extends React.Component{
 	SaveXlsx(){ 
 		const name = dc.create_xlsx()
 		if(name){
-			this.setState({
-				showAlertDialog: [true, `created: ${name}`]
-			})
+			this.createAlertDialog(`${name} has been created.`);
 		}
 	}
 
@@ -296,7 +300,7 @@ class MainPage extends React.Component{
     }
     DeleteData(){
 		if(jdb.delete(this.id)){
-			this.props.history.push('/'); //TODO maybe change later
+			this.props.history.push('/');
 		}
     }
     ToFirst(){
