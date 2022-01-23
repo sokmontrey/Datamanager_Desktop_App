@@ -50,6 +50,13 @@
   margin: 0 calc(var(--small-padding) * 2);
   font-family: var(--primary-font);
 }
+.search-filter-input {
+  border-radius: 0.3rem;
+  outline: none;
+  color: var(--primary-color);
+  padding: calc(var(--small-padding) * 0.3);
+  border: solid 0.05rem var(--light-primary-color);
+}
 /* body--------------------*/
 
 #search-body-container {
