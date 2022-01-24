@@ -79,14 +79,16 @@ class MainPage extends React.Component{
 			: ''}
 
 			{this.state.showConfirmDialog[0]?
-				ConfirmDialog(this.state.showConfirmDialog[1],
-				this.state.showConfirmDialog[2],
-				()=>this.setState({showConfirmDialog: [false, null]}) )
+				<ConfirmDialog
+				message={this.state.showConfirmDialog[1]}
+				onYes={this.state.showConfirmDialog[2]}
+				onNo={()=>this.setState({showConfirmDialog: [false, null]}) } />
 			:''}
 
 			{this.state.showAlertDialog[0] ?
-				AlertDialog(this.state.showAlertDialog[1],
-				()=>this.setState({showAlertDialog: [false, null]}))
+				<AlertDialog
+				message={this.state.showAlertDialog[1]}
+				onClose={()=>this.setState({showAlertDialog: [false, null]}) } />
 			: ''}
 
 			<SearchPanel 

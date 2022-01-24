@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-export function ConfirmDialog(message, onYes, onNo){
+export function ConfirmDialog(props){
 	return ( <div className='dialog-wrapper'>
 		<div className='dialog-container'>
-			<p className='dialog-text'>{message}</p>
+			<p className='dialog-text'>{props.message}</p>
 			<button className='button2'
-				onClick={()=>onYes()}>Yes</button>
+				onClick={()=>props.onYes()}>Yes</button>
 			<button className='button2'
-				onClick={()=>onNo()}>No</button>
+				onClick={()=>props.onNo()}>No</button>
 		</div>
 	</div> )
 }
-export function AlertDialog(message, onClose){
+export function AlertDialog(props){
 	return ( <div className='dialog-wrapper'>
 		<div className='dialog-container'>
-			<p className='dialog-text'>{message}</p>
+			<p className='dialog-text'>{props.message}</p>
 			<button className='button2' 
-				onClick={()=>onClose()}>Close</button>
+				onClick={()=>props.onClose()}>Close</button>
 		</div>
 	</div> );
 }
