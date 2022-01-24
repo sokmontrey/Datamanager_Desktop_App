@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
+//to use any of this dialog:
+//1 import
+//2 create state of array[3]: [
+//	isShowDialogOrNot: boolean, 
+//	message: string, 
+//	callback: function
+//]
+//3 include dialog component in render by:
+//	{isShowDialogOrNot?
+//	<Dialog
+//	message={message}
+//	callback={callback}> (could be more than 1 ex: Confirm & Prompt dialog)
+//	:''}
 export function ConfirmDialog(props){
 	return ( <div className='dialog-wrapper'>
 		<div className='dialog-container'>
