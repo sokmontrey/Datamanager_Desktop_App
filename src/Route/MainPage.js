@@ -33,7 +33,7 @@ class MainPage extends React.Component{
         this.state = {
 			showAlertDialog: [false, null],
 			showDeleteConfirm: [false, null, null],
-            data: jdb.read_json(props.id),
+            data: jdb.read_json(props.id) ,
 			img_path: jdb.read_img(props.id) || '',
 
             tab: left_list[0],
@@ -124,7 +124,6 @@ class MainPage extends React.Component{
     }
     OnInputChange(value, key, index){
         const new_data = this.state.data;
-        // const tab = this.state.tab;
 
         if(Array.isArray(new_data[this.state.tab])) 
             new_data[this.state.tab][index][key] = value;
@@ -133,8 +132,8 @@ class MainPage extends React.Component{
         const [cal, working] = dc.use_formula(new_data, this.state.tab);
         if(working) this.setData(cal);
         else { this.setData(new_data); }
-        this.SaveData();
-    }
+		this.SaveData();
+	}
     PushList(){
         const new_data = this.state.data;
         // const tab = this.state.tab;
@@ -212,7 +211,7 @@ class MainPage extends React.Component{
 
                 <CreateInputElement 
                     type = {dc.get_input_type(this.state.tab, key)}
-                    value = {element[key]}
+                    value = {element[key] || ''}
                     onChange = {(value)=>{
                         this.OnInputChange(value, key, index);
                     }}
