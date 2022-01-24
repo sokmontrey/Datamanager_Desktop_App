@@ -20,11 +20,11 @@ export function AlertDialog(message, onClose){
 		</div>
 	</div> );
 }
-export function PromptDialog(message, onSubmit, onClose){
+export function PromptDialog(props){
 	const [value, setValue] = useState('');
 	return (<div className='dialog-wrapper'>
 		<div className='dialog-container'>
-			<p className='dialog-text'>{message}</p>
+			<p className='dialog-text'>{props.message}</p>
 			<input className='text-input khmer'
 				placeholder='Input...'
 				type='text'
@@ -33,11 +33,11 @@ export function PromptDialog(message, onSubmit, onClose){
 				}} 
 				value={value}/>
 			<button className='button1'
-				onClick={()=>{onSubmit(value)}}>
+				onClick={()=>{props.onSubmit(value)}}>
 				Submit
 			</button>
 			<button className='button2'
-				onClick={()=>onClose()}>Close</button>
+				onClick={()=>props.onClose()}>Close</button>
 		</div>
 	</div>);
 }
@@ -57,7 +57,7 @@ export function CreateInputElement(props){
 
 			<button 
 				className='button3'
-				onClick={()=>{}}>
+				onClick={()=>{props.onInsert()}}>
 				<i className='fi fi-rr-plus-small icon' />
 			</button>
 

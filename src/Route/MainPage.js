@@ -63,13 +63,19 @@ class MainPage extends React.Component{
 			showConfirmDialog: [true, message, callback]
 		});
 	}
+	creaatePromptDialog(message, callback){
+		this.setState({
+			showPromptDialog: [true, message, callback]
+		});
+	}
 
     render(){
 		return (<>
 			{this.state.showPromptDialog[0] ?
-				PromptDialog(this.state.showPromptDialog[1],
-				this.state.showPromptDialog[2],
-				()=>this.setState({showPromptDialog: [false, null, null]}) )
+				<PromptDialog
+				message={this.state.showPromptDialog[1]}
+				onSubmit={this.state.showPromptDialog[2]}
+				onClose={()=>this.setState({showPromptDialog: [false, null, null]}) } />
 			: ''}
 
 			{this.state.showConfirmDialog[0]?
@@ -222,9 +228,14 @@ class MainPage extends React.Component{
                     onChange = {(value)=>{
                         this.OnInputChange(value, key, index);
                     }}
-                    onInsert = {(value)=>{
-                        dc.insert_select_element(this.state.tab, key, value);
-                        this.forceUpdate();
+                    onInsert = {()=>{
+						this.creaatePromptDialog('insert new option', (value)=>{
+							dc.insert_select_element(this.state.tab, key, value);
+							this.forceUpdate();
+							this.setState({
+								showPromptDialog: [false, null, null]
+							});
+						});
                     }}
                 />
             </div>

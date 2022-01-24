@@ -75,6 +75,16 @@ button:disabled:hover {
   font-family: var(--primary-font);
 }
 
+.button1 {
+  color: white;
+  background-color: var(--primary-color);
+}
+.button1:hover {
+  transform: translate(0, -0.2rem);
+}
+.button1:active {
+  transform: translate(0, 0.2rem);
+}
 .button2 {
   color: var(--primary-color);
   background-color: var(--light-primary-color);
