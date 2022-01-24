@@ -63,12 +63,13 @@ export class JSON_DB{
             for(let tab in schema){
                 const ws = this.create_sheet_from_tab(tab);
                 if(ws){
-                    xlsx.utils.book_append_sheet(wb, ws, tab);
+					const tab_name = tab.length > 30 ? tab.slice(0, 31) : tab;
+                    xlsx.utils.book_append_sheet(wb, ws, tab_name);
                 }
             }
             xlsx.writeFile(wb, xlsx_path);
             return `${date}.xlsx`;
-        }catch(e){return false;}
+        }catch(e){console.log(e);return false;}
     }
 
     write_json(id, data){
