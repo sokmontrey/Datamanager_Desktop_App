@@ -15,7 +15,7 @@ import {
 } from "../Components/Element.js";
 
 import { SearchPanel } from "../Components/SearchPanel.js";
-import { ConfirmDialog, AlertDialog } from "../Components/Element.js";
+import { ConfirmDialog, AlertDialog, PromptDialog } from "../Components/Element.js";
 
 class MainPage extends React.Component{
     constructor(props){
@@ -32,7 +32,8 @@ class MainPage extends React.Component{
 
         this.state = {
 			showAlertDialog: [false, null],
-			showDeleteConfirm: [false, null, null],
+			showConfirmDialog: [false, null, null],
+			showPromptDialog: [false, null, null],
             data: jdb.read_json(props.id) ,
 			img_path: jdb.read_img(props.id) || '',
 
@@ -59,16 +60,22 @@ class MainPage extends React.Component{
 	}
 	createConfirmDialog(message, callback){
 		this.setState({
-			showDeleteConfirm: [true, message, callback]
+			showConfirmDialog: [true, message, callback]
 		});
 	}
 
     render(){
 		return (<>
-			{this.state.showDeleteConfirm[0]?
-				ConfirmDialog(this.state.showDeleteConfirm[1],
-				this.state.showDeleteConfirm[2],
-				()=>this.setState({showDeleteConfirm: [false, null]}) )
+			{this.state.showPromptDialog[0] ?
+				PromptDialog(this.state.showPromptDialog[1],
+				this.state.showPromptDialog[2],
+				()=>this.setState({showPromptDialog: [false, null, null]}) )
+			: ''}
+
+			{this.state.showConfirmDialog[0]?
+				ConfirmDialog(this.state.showConfirmDialog[1],
+				this.state.showConfirmDialog[2],
+				()=>this.setState({showConfirmDialog: [false, null]}) )
 			:''}
 
 			{this.state.showAlertDialog[0] ?
@@ -129,9 +136,9 @@ class MainPage extends React.Component{
             new_data[this.state.tab][index][key] = value;
         else new_data[this.state.tab][key] = value;
 
-        const [cal, working] = dc.use_formula(new_data, this.state.tab);
-        if(working) this.setData(cal);
-        else { this.setData(new_data); }
+		const [cal, working] = dc.use_formula(new_data, this.state.tab);
+		if(working) this.setData(cal);
+		else { this.setData(new_data); }
 		this.SaveData();
 	}
     PushList(){

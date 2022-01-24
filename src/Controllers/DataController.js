@@ -143,28 +143,4 @@ export class Data_Controller{
         }
         return [new_data, working];
     }
-    
-    // delete_data(id){
-    //     return jdb.delete(id);
-    // }
-
-    // write_img(id, img_path){
-    //     return jdb.write_img(id, img_path);
-    // }
-
-    // get_img_path(id){
-    //     return jdb.read_img(id);
-    // }
-
-    // update_data(id, data, img_path){
-    //     return jdb.update(id, data, img_path);
-    // }
-
-    // get_json_data(id){
-    //     return jdb.read_json(id);
-    // }
-
-    // get_all_key(){
-    //     return jdb.read_key();
-    // }
 }

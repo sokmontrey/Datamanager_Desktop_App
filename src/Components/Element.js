@@ -20,6 +20,27 @@ export function AlertDialog(message, onClose){
 		</div>
 	</div> );
 }
+export function PromptDialog(message, onSubmit, onClose){
+	const [value, setValue] = useState('');
+	return (<div className='dialog-wrapper'>
+		<div className='dialog-container'>
+			<p className='dialog-text'>{message}</p>
+			<input className='text-input khmer'
+				placeholder='Input...'
+				type='text'
+				onChange={(e)=>{
+					setValue(e.target.value);
+				}} 
+				value={value}/>
+			<button className='button1'
+				onClick={()=>{onSubmit(value)}}>
+				Submit
+			</button>
+			<button className='button2'
+				onClick={()=>onClose()}>Close</button>
+		</div>
+	</div>);
+}
 
 export function CreateInputElement(props){
     const [value, setValue] = useState(props.value);
@@ -30,20 +51,15 @@ export function CreateInputElement(props){
     }, [props.value]);
 
     if(Array.isArray(type)){
-        const [focus, setFocus] = useState(false);
-
-        return ( <div className='select-input-container'
-        onFocus={()=>{setFocus(true)}}
-        onBlur={()=>{setFocus(false)}}>
+		return ( <div className='select-input-container'>
 
             {SELECT_TypeInput(type, value, setValue, props)}
 
-            <CreateInsertSelect
-            focus={focus}
-            setFocus={setFocus}
-            onInsert={(value)=>{
-                props.onInsert(value);
-            }}/>
+			<button 
+				className='button3'
+				onClick={()=>{}}>
+				<i className='fi fi-rr-plus-small icon' />
+			</button>
 
         </div>);
     }else if(type === 'DATE'){
@@ -53,35 +69,6 @@ export function CreateInputElement(props){
     }else{
         return TEXT_TypeInput(value, setValue, props);
     }
-}
-
-function CreateInsertSelect(props){
-    const [value, setValue] = useState(''); 
-
-    return (<div className='insert-select-container'
-    style={{ width: props.focus?'100%':'0%' }}>
-
-        <input className='text-input khmer select-insert-input' 
-        placeholder='insert...'
-        type='text'
-        value={value}
-        onFocus={()=>{ props.setFocus(true) }}
-        onBlur={()=>{ props.setFocus(false) }}
-        onChange={(e)=>{
-            setValue(e.target.value);
-        }} />
-
-        <button className='button3'
-        onClick={()=>{
-            if(value){ 
-                props.onInsert(value); 
-                setValue('');
-            }
-        }}>
-            <i className='fi fi-rr-plus-small icon' />
-        </button>
-
-    </div>);
 }
 
 function DISPLAY_TypeInput(value){
@@ -118,7 +105,7 @@ function SELECT_TypeInput(list, value, setValue, props){
         }} >
             
         <option className='option' value=''>
-            {'Please choose an option'}
+            {'Select...'}
         </option>
 
         {list.map((item, index)=>

@@ -1,12 +1,6 @@
 .selected-tab {
   color: var(--primary-color);
 }
-.label-input-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: calc(var(--small-padding) * 0.7);
-}
 #body-container {
   display: flex;
   flex-direction: row;
@@ -67,7 +61,7 @@
   transition: 0.5s;
   padding: 0;
   text-align: left;
-  padding: calc(var(--small-padding) * 0.15) 0;
+  padding: calc(var(--small-padding) * 0.2) 0;
 }
 
 /* right side's style ---------------------------------*/
@@ -116,25 +110,20 @@
   display: block;
   transition: 0.5s;
 }
+.label-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: calc(var(--small-padding) * 0.7);
+}
 .select-input-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
 }
-.select-input-container:hover {
-  line-height: 0;
+.label-input-container .button3 {
+  display: none;
 }
-.insert-select-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 0;
-  overflow-x: hidden;
-  transition: 0.8s;
-}
-.select-insert-input {
-  flex: 0;
-  min-width: 0;
+.label-input-container:hover .button3 {
+  display: block;
 }
